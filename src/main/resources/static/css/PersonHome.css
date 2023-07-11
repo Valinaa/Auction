@@ -1,0 +1,165 @@
+.content-wrapper-div{
+    /*background-color: #bfa;*/
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 10px;
+}
+
+.left-daohang{
+    float: left;
+    width: 20%;
+    /*background-color: grey;*/
+}
+
+.right-info-show-wrapper{
+    float: left;
+}
+
+.left-daohang{
+    font-size: 20px;
+}
+
+.left-daohang a{
+    display: block;
+    background-color: rgb(51,51,51);
+    margin-top: 5px;
+    color: white;
+    /*padding: 15px 30px;*/
+    padding: 12px 30px;
+    border-radius: 8px;
+}
+
+.left-daohang a:hover{
+    color: black;
+    background-color: pink;
+    text-decoration-line: none;
+}
+
+.left-daohang a:focus{
+    text-decoration-line: none !important;
+    outline: 0 !important;
+}
+
+
+.left-daohang .myactive-daohang{
+    background-color: pink;
+    color: black;
+}
+
+
+.right-info-show-wrapper{
+    width: 76%;
+    /*background-color: #fba;*/
+    margin-left: 4%;
+    margin-top: 5px;
+}
+
+
+.right-info-show{
+    /*background-color: #bfa;*/
+
+}
+
+.right-info-div p{
+    font-size: 28px;
+    /*font-weight: bold;*/
+    float: left;
+}
+
+.right-info-div button{
+    float: right;
+    margin-right: 10px;
+    /*padding: 8px 20px;*/
+}
+
+.info-title{
+    padding: 5px 0;
+}
+
+.left-myinfo{
+    float: left;
+    width: 49%;
+    /*background-color: #fba;*/
+}
+
+.right-myinfo{
+    float: right;
+    width: 49%;
+    /*background-color: grey;*/
+}
+
+.right-info-show .myActiveInRightInfo{
+    display: none;
+}
+
+/* 修改密码板块 */
+/*.right-info-psw p{*/
+    /*font-size: 28px;*/
+/*}*/
+
+.myinfo-psw-update{
+    width: 50%;
+    margin: 50px auto;
+}
+
+.myinfo-psw-btn p{
+    text-align: center;
+    margin-top: 30px;
+}
+
+/*  修改密码的按钮大小  */
+.myinfo-psw-btn button{
+    padding: 10px 30px;
+    /*  默认的大小也还可以 */
+}
+
+/*  购物车板块 */
+/*.right-info-shopcart p{*/
+    /*font-size: 28px;*/
+/*}*/
+
+.shopcart-info-mysearch{
+    width: 40%;
+    /*  上边距后加的  */
+    margin-top: 6px;
+}
+
+/*  购物车列表上方距离  */
+.shopcart-info-listcontent{
+    /*margin-top: 50px;*/
+    margin-top: 4%;
+}
+
+.mytableListInfo a{
+    text-decoration-line: none;
+}
+
+.info-title p{
+    font-size: 28px;
+}
+
+
+/* 竞拍列表与上方的距离 ----  与购物车的列表数据一样  */
+.myauction-info-listcontent{
+    margin-top: 4%;
+}
+
+/*  我的商品列表与上方的距离 */
+.myGoods-info-listcontent{
+    margin-top: 4%;
+}
+
+/*  我的订单列表与上方的距离 */
+.myOrderInfo-info-listcontent{
+    margin-top: 4%;
+}
+
+
+
+
+
+
+
+
+
+

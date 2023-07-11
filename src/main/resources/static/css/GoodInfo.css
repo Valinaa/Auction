@@ -1,0 +1,40 @@
+.goodinfoPage{
+    width: 80%;
+    margin: 0 auto;
+}
+
+/*  统一大小  */
+.goodinfoPage img{
+    width: 480px;
+    height: 370px;
+    margin: 0 auto;
+}
+
+.my-left-pic-icon{
+    text-align: center;
+}
+
+.my-left-pic-icon span{
+    padding: 10px 22px;
+    box-sizing: padding-box;
+    height: 36px;
+    margin-top: 8px;
+}
+
+.my-right-auctionInfo{
+    padding-left: 80px;
+}
+
+.my-right-auctionInfo dd{
+    line-height: 46px;
+    font-size: 15px;
+}
+
+.myAuctionBtnInGoodInfo{
+    padding:0 70px;
+    margin-bottom: 10px;
+}
+
+.myshopCartBtnInGoodInfo{
+    padding: 0 70px;
+}

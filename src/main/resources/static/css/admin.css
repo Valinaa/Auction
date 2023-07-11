@@ -1,0 +1,29 @@
+
+/*  用户管理列表与上方的距离  */
+/*  商品信息管理列表与上方的距离  */
+/*  商品竞拍记录管理列表与上方的距离  */
+/*  订单管理列表与上方的距离  */
+/*  商家申请情况列表与上方的距离  */
+/*.adminUser-info-listcontent,*/
+/*.adminGoods-info-listcontent,*/
+/*.adminAuctions-info-listcontent,*/
+/*.adminOrder-info-listcontent,*/
+/*.adminSaler-info-listcontent{*/
+    /*margin-top: 4%;*/
+/*}*/
+
+
+.layui-table-tips-c {
+    width: 26px;
+    height: 26px;
+}
+
+/* 解决表格的列之间高度不一致 */
+.layui-table-cell {
+    height: auto;
+}
+
+/* 去掉a下划线*/
+body a:hover{
+    text-decoration-line: none;
+}

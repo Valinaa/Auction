@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上拍卖系统-By-Lankeren</title>
+</head>
+<link rel="stylesheet" type="text/css" href="css/reset200802.css"/>
+<link rel="stylesheet" type="text/css" href="./layui/css/layui.css"/>
+<link rel="stylesheet" type="text/css" href="css/index.css"/>
+<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./layui/layui.js"></script>
+<script type="text/javascript" src="./js/pageHeader.js"></script>
+<script type="text/javascript" src="./js/login-register.js"></script>
+
+<script>
+
+    // $(document).ready(function () {
+    //
+    // });
+
+</script>
+
+<body class="mybody">
+<!-- 头部  -->
+<nav class="top-wrapper-nav navbar navbar-default">
+    <div class="guding-width">
+        <nav role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">AuctionOnlineSys-By-Lankeren</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right lankeren1">
+                    <script>lankeren1();</script>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</nav>
+
+<!-- 头部二  -->
+<div class="top-sec-wrapper clearfix">
+
+    <div class="left-sec-img-logo">
+        <a href="./index.html"><img src="imgs/logo.png" alt=""></a>
+    </div>
+    <div class="mysearch-mytype">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle"
+                    data-toggle="dropdown">
+                所有分类 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">陶瓷</a></li>
+                <li><a href="#">古剑</a></li>
+                <li><a href="#">旗袍</a></li>
+                <li class="divider"></li>
+                <li><a href="#">名画</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="mysearch clearfix">
+        <form class="navbar-form" role="search">
+            <div class="form-group">
+                <input type="text" autocomplete="off" value="" class="form-control mySearchContents" placeholder="Search">
+            </div>
+            <button type="button" class="btn btn-default" onclick="searchGoods()">搜索</button>
+        </form>
+    </div>
+    <div class="myauction">
+        <ul class="">
+            <li><a href="javascript:;" onclick="shoppingCart()"><span class="glyphicon glyphicon-shopping-cart"></span>
+                购物车</a></li>
+        </ul>
+    </div>
+
+</div>
+
+
+<!-- 中间部分  -->
+<nav>
+
+    <div class="middle-content-div">
+        <!-- 选项卡切换 -->
+        <div class="clearfix">
+            <ul class="layui-nav layui-bg-cyan">
+                <li class="layui-nav-item layui-this"><a href="">拍品列表</a></li>
+                <li class="layui-nav-item "><a href="">定价秒购</a></li>
+                <li class="layui-nav-item "><a href="">AuctionOnlineSys</a></li>
+                <li class="layui-nav-item ">
+                    <a href="javascript:;">By-Lankeren</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">By-Lankeren</a></dd>
+                        <dd><a href="">By-Lankeren</a></dd>
+                        <dd><a href="">By-Lankeren</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+        <!--  列表内容 -->
+        <div class="middle-content-list">
+
+
+            <!--  拍品列表 -->
+            <div class="theAuctionList clearfix">
+                <!-- 底部面板 -->
+                <div style="padding: 20px; background-color: #F2F2F2;">
+                    <!--  显示几页  -->
+                    <div class="panel panel-default">
+                        <div class="panel-body myPageHelper">
+                            共-999页,还剩-999件拍卖品正在竞拍中
+                        </div>
+                    </div>
+
+                    <div class="layui-row layui-col-space15" id="setAuctionListContent">
+
+                        <!--<script>setAuctionListContent();</script>-->
+
+                        <div class="layui-col-md12" id="myAuctionListPageIndexDiv">
+                            <!-- 分页 -->
+                            <div id="myAuctionListPageIndex"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!--  定价秒购  -->
+            <div></div>
+
+        </div>
+    </div>
+
+</nav>
+
+
+<!-- 底部  -->
+<nav>
+
+</nav>
+
+
+</body>
+</html>

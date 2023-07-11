@@ -1,0 +1,88 @@
+body{
+    width: 100%;
+    height: 100%;
+}
+
+.their-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+}
+
+.left-wrapper-their{
+    width: 60%;
+    background-color: pink;
+}
+
+.right-wrapper-their{
+    width: 40%;
+}
+
+.left-wrapper-their,
+.right-wrapper-their{
+    flex: inherit;
+}
+
+.left-wrapper-their img{
+    width: 180px;
+
+}
+
+.logo-div{
+    margin: 30px 0 0 50px;
+}
+
+.left-center-word{
+    width: 600px;
+    height: 150px;
+    margin: 0 auto;
+    font-size: 40px;
+    text-align: center;
+}
+
+.left-center-word p{
+    margin-top: 50%;
+}
+
+.left-center-word span{
+    color: rgb(119,119,160);
+}
+
+
+.mylogin-wrapper{
+    width: 400px;
+    margin-top: 48%;
+    margin-left: 60px;
+}
+
+.mylogin-word p{
+    font-size: 28px;
+}
+
+.mylogin-word {
+    margin-bottom: 30px ;
+}
+
+.mylogin-form button{
+    margin-top: 40px;
+    padding: 8px 185px;
+    border-radius: 18px;
+
+}
+
+.mylogin-form button:focus{
+    outline: 0 !important;
+}
+
+
+.mylogin-word a:hover,
+.mylogin-word a:focus{
+    text-decoration-line: none;
+
+}
+
+
+
+
+

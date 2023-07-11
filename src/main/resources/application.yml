@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    username: auction
+    password:
+    url: jdbc:mysql:///system.valinaa-wei.tech?serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
