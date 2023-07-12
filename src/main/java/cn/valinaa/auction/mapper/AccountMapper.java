@@ -14,7 +14,7 @@ public interface AccountMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int registerAccount(Account account);
 
-    @Insert("INSERT INTO `auctiononlinesys`.`account_info`(`aid`) VALUES (#{aid})")
+    @Insert("INSERT INTO `auction`.`account_info`(`aid`) VALUES (#{aid})")
     int registerAccountInfo(Integer aid);
 
     @Select("select id from account where account = #{account}")
@@ -39,7 +39,7 @@ public interface AccountMapper {
     @Update("UPDATE `account` SET `name` = #{name} WHERE `id` = #{aid}")
     int updateAccountName(AccountInfo accountInfo);
 
-    @Update("UPDATE `auctiononlinesys`.`account` SET `password` = #{psw} WHERE `id` = #{id} and password = #{old}")
+    @Update("UPDATE `auction`.`account` SET `password` = #{psw} WHERE `id` = #{id} and password = #{old}")
     int updateAccountPsw(String old, String psw, Integer id);
 
 

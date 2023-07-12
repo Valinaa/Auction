@@ -4,7 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -22,7 +21,7 @@ public class MFileUtil {
         if(!fileDir.exists()) {
             fileDir.mkdirs();
         }
-        String xd = UUID.randomUUID().toString() + ".jpg";
+        String xd = UUID.randomUUID() + ".jpg";
         path = path+"\\"+ xd;
         try {
             multipartFile.transferTo(new File(path));

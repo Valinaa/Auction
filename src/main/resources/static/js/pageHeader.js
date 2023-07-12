@@ -31,7 +31,7 @@ function logout(){
     $.ajax({
         type: "get",
         dataType: "json",
-        url: "http://localhost:8080/logout",
+        url: "http://localhost:8000/logout",
         async: false,
         success: function (data) {
             console.log(data);

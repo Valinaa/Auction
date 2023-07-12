@@ -5,32 +5,32 @@ import cn.valinaa.auction.bean.GoodAuction;
 import cn.valinaa.auction.bean.SalerInfo;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface GoodsService {
+ public interface GoodsService {
 
-    public  Object saveGoodInfo(GoodAuction goodAuction);
+     Object saveGoodInfo(GoodAuction goodAuction);
 
-    public Object savePic(MultipartFile file, Integer id);
+     Object savePic(MultipartFile file, Integer id);
 
-    public Object salerApply(SalerInfo salerInfo);
+     Object salerApply(SalerInfo salerInfo);
 
-    public Object getAuctionList(Integer currentPage, Integer pageSize);
+     Object getAuctionList(Integer currentPage, Integer pageSize);
 
-    public Object getGoodInfoById(Integer gid, Integer aid);
+     Object getGoodInfoById(Integer gid, Integer aid);
 
-    public Object addShopCart(Integer aid, Integer gid);
+     Object addShopCart(Integer aid, Integer gid);
 
-    public Object auction(AuctionRecord auctionRecord);
+     Object auction(AuctionRecord auctionRecord);
 
-    public Object getShoppingCartList(Integer aid, Integer curr, Integer pageSize);
+     Object getShoppingCartList(Integer aid, Integer curr, Integer pageSize);
 
-    public Object getAuctionRecord(Integer aid, Integer curr, Integer pageSize);
+     Object getAuctionRecord(Integer aid, Integer curr, Integer pageSize);
 
-    public Object getMyAuction(Integer aid, Integer curr, Integer pageSize);
+     Object getMyAuction(Integer aid, Integer curr, Integer pageSize);
 
-    public Object getOrderList(Integer aid, Integer curr, Integer pageSize);
+     Object getOrderList(Integer aid, Integer curr, Integer pageSize);
 
-    public Object delMyGoods(Integer aid, Integer gid);
+     Object delMyGoods(Integer aid, Integer gid);
 
-    public Object searchAuctionList(String condition, Integer curr, Integer pageSize);
+     Object searchAuctionList(String condition, Integer curr, Integer pageSize);
 
 }

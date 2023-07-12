@@ -1,6 +1,6 @@
 package cn.valinaa.auction.serviceImpl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import cn.valinaa.auction.bean.Account;
 import cn.valinaa.auction.bean.AccountInfo;
 import cn.valinaa.auction.mapper.AccountMapper;
@@ -43,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
     public Object register(Account account) {
         JSONObject res = new JSONObject();
         Integer b = accountMapper.getAccountIdByAccount(account.getAccount());
-        if(StringUtils.isEmpty(account.getAccount()) || StringUtils.isEmpty(account.getPassword()) || b != null){
+        if(!StringUtils.hasLength(account.getAccount()) || !StringUtils.hasLength(account.getPassword()) || b != null){
             res.put("msg","f");
             return res;
         }

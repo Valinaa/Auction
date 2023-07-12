@@ -44,7 +44,7 @@ function myInfoPage() {
 
         }
     }
-    xmlhttp.open("POST", "http://localhost:8080/getAccountInfo", true);
+    xmlhttp.open("POST", "http://localhost:8000/getAccountInfo", true);
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send(jsonData);
 
@@ -82,7 +82,7 @@ $(document).ready(function () {
     $.ajax({
         type: "get",
         dataType: "json",
-        url: "http://localhost:8080/getAuctionList/1/1",
+        url: "http://localhost:8000/getAuctionList/1/1",
         async: false,
         success: function (data) {
             console.log(data);
@@ -119,7 +119,7 @@ $(document).ready(function () {
         $.ajax({
             type: "get",
             dataType: "json",
-            url: "http://localhost:8080/getGoodInfoById/" + gid + "/" + aid,
+            url: "http://localhost:8000/getGoodInfoById/" + gid + "/" + aid,
             async: false,
             success: function (data) {
                 console.log(data);
@@ -214,7 +214,7 @@ function pageJump(curr) {
     $.ajax({
         type: "get",
         dataType: "json",
-        url: "http://localhost:8080/getAuctionList/" + curr + "/1",
+        url: "http://localhost:8000/getAuctionList/" + curr + "/1",
         async: false,
         success: function (data) {
             // console.log(data);
@@ -243,7 +243,7 @@ function searchGoods() {
     $.ajax({
         type: "post",
         dataType: "json",
-        url: "http://localhost:8080/searchAuctionList",
+        url: "http://localhost:8000/searchAuctionList",
         // contentType:"application/json",
         // data: JSON.stringify(myData),
         data: myData,

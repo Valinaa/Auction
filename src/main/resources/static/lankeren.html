@@ -7,19 +7,19 @@
 <link rel="stylesheet" type="text/css" href="css/reset200802.css"/>
 <link rel="stylesheet" type="text/css" href="css/index.css"/>
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
-<link rel="stylesheet" type="text/css" href="./layer/theme/default/layer.css"/>
-<link rel="stylesheet" type="text/css" href="./layui/css/layui.css"/>
+<link rel="stylesheet" type="text/css" href="layer/theme/default/layer.css"/>
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
 <link rel="stylesheet" type="text/css" href="css/PersonHome.css"/>
 <link rel="stylesheet" type="text/css" href="css/myVip.css"/>
 <link rel="stylesheet" type="text/css" href="css/admin.css"/>
 <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./layer/layer.js"></script>
-<script type="text/javascript" src="./layui/layui.js" media="all"></script>
-<script type="text/javascript" src="./js/pageHeader.js"></script>
-<script type="text/javascript" src="./js/login-register.js"></script>
-<script type="text/javascript" src="./js/PersonHome.js"></script>
-<script type="text/javascript" src="./js/admin.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
+<script type="text/javascript" src="layui/layui.js" media="all"></script>
+<script type="text/javascript" src="js/pageHeader.js"></script>
+<script type="text/javascript" src="js/login-register.js"></script>
+<script type="text/javascript" src="js/PersonHome.js"></script>
+<script type="text/javascript" src="js/admin.js"></script>
 
 
 <script>
@@ -385,7 +385,7 @@
 
                                     table.render({
                                         elem: '#test'
-                                        , url: "http://localhost:8080/getUserList"
+                                        , url: "http://localhost:8000/getUserList"
                                         , toolbar: '#toolbarDemo'
                                         , title: '用户数据表'
                                         , totalRow: true
@@ -486,7 +486,7 @@
 
                                     table.render({
                                         elem: '#adGoodsInfo'
-                                        , url: "http://localhost:8080/getGoodAuctionList"
+                                        , url: "http://localhost:8000/getGoodAuctionList"
                                         , toolbar: '#toolbarDemo'
                                         , title: '商品信息数据表'
                                         , totalRow: true
@@ -579,7 +579,7 @@
 
                                     table.render({
                                         elem: '#adAuctionRecord'
-                                        , url: "http://localhost:8080/getAuctionRecordList"
+                                        , url: "http://localhost:8000/getAuctionRecordList"
                                         , toolbar: '#toolbarDemo'
                                         , title: '商品信息数据表'
                                         , totalRow: true
@@ -674,7 +674,7 @@
 
                                     table.render({
                                         elem: '#order'
-                                        , url: 'http://localhost:8080/getOrderList'
+                                        , url: 'http://localhost:8000/getOrderList'
                                         , toolbar: '#toolbarOrder' // 工具栏的id
                                         , title: '订单数据表'
                                         , totalRow: true
@@ -771,7 +771,7 @@
 
                                     table.render({
                                         elem: '#adsalerApply'
-                                        , url: "http://localhost:8080/getSalerApply"
+                                        , url: "http://localhost:8000/getSalerApply"
                                         , toolbar: '#toolbarDemo'
                                         , title: '商家申请数据表'
                                         , totalRow: true

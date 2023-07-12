@@ -6,4 +6,4 @@ create table shoppingcart
     aid int null comment '用户id'
 );
 
-INSERT INTO auctiononlinesys.shoppingcart (id, gid, aid) VALUES (2, 2, 6);
+INSERT INTO auction.shoppingcart (id, gid, aid) VALUES (2, 2, 6);

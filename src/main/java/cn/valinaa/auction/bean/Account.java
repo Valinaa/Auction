@@ -1,6 +1,9 @@
 package cn.valinaa.auction.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -9,71 +12,26 @@ import java.time.LocalDateTime;
  * @Description:
  * @Date: 2023-07-12 18:41
  */
-public class Account {
-    private Integer id;
-    private String account;
-    private String name;
-    private String password;
-    private Integer identity;
-    private Integer status;
 
+@Schema(description = "账号实体类",name = "Account")
+@Data
+@NoArgsConstructor
+public class Account {
+    @Schema(description = "账号id",name = "id")
+    private Integer id;
+    @Schema(description = "账号",name = "account")
+    private String account;
+    @Schema(description = "姓名",name = "name")
+    private String name;
+    @Schema(description = "密码",name = "password")
+    private String password;
+    @Schema(description = "身份",name = "identity")
+    private Integer identity;
+    @Schema(description = "状态",name = "status")
+    private Integer status;
+    @Schema(description = "注册时间",name = "regTime")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regTime;
-
-    public Account() {
-    }
-
-    public void setRegTime(LocalDateTime regTime) {
-        this.regTime = regTime;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(Integer identity) {
-        this.identity = identity;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 
     @Override
     public String toString() {

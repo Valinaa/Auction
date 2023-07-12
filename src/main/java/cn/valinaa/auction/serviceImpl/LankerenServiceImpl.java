@@ -1,7 +1,7 @@
 package cn.valinaa.auction.serviceImpl;
 
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import cn.valinaa.auction.enums.Constant;
@@ -29,31 +29,31 @@ public class LankerenServiceImpl implements LankerenService {
     @Override
     public Object getUserList(Integer page, Integer limit) {
         PageHelper.startPage(page, limit);
-        return theSame(lankerenMapper.getUserList() , "data");
+        return theSame(lankerenMapper.getUserList());
     }
 
     @Override
     public Object getGoodAuctionList(Integer curr, Integer pageSize) {
         PageHelper.startPage(curr, pageSize);
-        return theSame(lankerenMapper.getGoodAuctionList() , "data");
+        return theSame(lankerenMapper.getGoodAuctionList());
     }
 
     @Override
     public Object getAuctionRecordList(Integer curr, Integer pageSize) {
         PageHelper.startPage(curr, pageSize);
-        return theSame(lankerenMapper.getAuctionRecordList() , "data");
+        return theSame(lankerenMapper.getAuctionRecordList());
     }
 
     @Override
     public Object getOrderList(Integer curr, Integer pageSize) {
         PageHelper.startPage(curr, pageSize);
-        return theSame( lankerenMapper.getOrderList() , "data");
+        return theSame( lankerenMapper.getOrderList());
     }
 
     @Override
     public Object getSalerApply(Integer curr, Integer pageSize) {
         PageHelper.startPage(curr, pageSize);
-        return theSame(lankerenMapper.getSalerApply() , "data");
+        return theSame(lankerenMapper.getSalerApply());
     }
 
     @Override
@@ -74,7 +74,7 @@ public class LankerenServiceImpl implements LankerenService {
         JSONObject res = new JSONObject();
         res.put("msg", "f");
         if(aid == null){ return  res; }
-        Integer f = lankerenMapper.pswReset(Constant.DefualtPsw, aid);
+        lankerenMapper.pswReset(Constant.DefualtPsw, aid);
         res.put("msg", "ok");
         return res;
     }
@@ -83,7 +83,7 @@ public class LankerenServiceImpl implements LankerenService {
     public Object delAccount(Integer aid) {
         JSONObject res = new JSONObject();
         res.put("msg", "f");
-        Integer f = lankerenMapper.delAccount(aid);
+        lankerenMapper.delAccount(aid);
         res.put("msg", "ok");
         return res;
     }
@@ -92,11 +92,9 @@ public class LankerenServiceImpl implements LankerenService {
     public Object salerApply(Integer sid, Integer status) {
         JSONObject res = new JSONObject();
         res.put("msg", "f");
-        if(status == null || status == null) {return  res;}
+        if(status == null) {return  res;}
         Integer f = lankerenMapper.updateSalerInfo(status, sid);
-        /**
-         *  如果同意卖家， 身份跟着改
-         */
+        //如果同意卖家， 身份跟着改
         if(status == 1){
             Integer aid = lankerenMapper.getAccountbySalerInfo(sid);
             updateIndentityInfo(aid, Constant.SalerUser);
@@ -122,9 +120,7 @@ public class LankerenServiceImpl implements LankerenService {
         res.put("msg", "f");
         if(aid == null || identity == null){  return  res; }
         try {
-            /**
-             *  修改成卖家的时候还有给卖家的那里添加一下东西
-             */
+            // 修改成卖家的时候还有给卖家的那里添加一下东西
             lankerenMapper.updateIndentityInfo(identity, aid);
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -135,13 +131,13 @@ public class LankerenServiceImpl implements LankerenService {
     }
 
 
-    private Object theSame(List<Map<String, Object>> list, String name){
+    private Object theSame(List<Map<String, Object>> list){
         JSONObject res1 = new JSONObject();
         try {
             PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(list);
             res1.put("msg", "ok");
             res1.put("code", "0");
-            res1.put(name, list);
+            res1.put("data", list);
             res1.put("count", pageInfo.getTotal());
         }catch (Exception e){
             res1.put("msg", "f");

@@ -15,6 +15,6 @@ create table account
     reg_time datetime                        null
 );
 
-INSERT INTO auctiononlinesys.account (id, name, account, password, identity, status, reg_time) VALUES (4, 'lankerens', 'test1', '333', 0, 1, '2021-06-29 18:58:10');
-INSERT INTO auctiononlinesys.account (id, name, account, password, identity, status, reg_time) VALUES (5, 'lankeren', 'lankeren', '111', 3, 1, '2021-06-29 19:22:11');
-INSERT INTO auctiononlinesys.account (id, name, account, password, identity, status, reg_time) VALUES (6, 'lankeren', 'saler', '111', 2, 1, '2021-06-29 19:38:47');
+INSERT INTO auction.account (id, name, account, password, identity, status, reg_time) VALUES (4, 'lankerens', 'test1', '333', 0, 1, '2021-06-29 18:58:10');
+INSERT INTO auction.account (id, name, account, password, identity, status, reg_time) VALUES (5, 'lankeren', 'lankeren', '111', 3, 1, '2021-06-29 19:22:11');
+INSERT INTO auction.account (id, name, account, password, identity, status, reg_time) VALUES (6, 'lankeren', 'saler', '111', 2, 1, '2021-06-29 19:38:47');

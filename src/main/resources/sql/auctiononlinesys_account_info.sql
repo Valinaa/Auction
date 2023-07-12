@@ -10,6 +10,6 @@ create table account_info
     love          varchar(255) null
 );
 
-INSERT INTO auctiononlinesys.account_info (aid, sex, location, phone, email, personal_sign, love) VALUES (4, null, null, null, null, null, null);
-INSERT INTO auctiononlinesys.account_info (aid, sex, location, phone, email, personal_sign, love) VALUES (5, null, null, null, null, null, null);
-INSERT INTO auctiononlinesys.account_info (aid, sex, location, phone, email, personal_sign, love) VALUES (6, null, null, null, null, null, null);
+INSERT INTO auction.account_info (aid, sex, location, phone, email, personal_sign, love) VALUES (4, null, null, null, null, null, null);
+INSERT INTO auction.account_info (aid, sex, location, phone, email, personal_sign, love) VALUES (5, null, null, null, null, null, null);
+INSERT INTO auction.account_info (aid, sex, location, phone, email, personal_sign, love) VALUES (6, null, null, null, null, null, null);

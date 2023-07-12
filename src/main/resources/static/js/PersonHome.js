@@ -98,7 +98,7 @@ function myinfoUpdateSubmitBtn() {
 
         }
     }
-    xmlhttp.open("POST", "http://localhost:8080/updateAccountInfo", true);
+    xmlhttp.open("POST", "http://localhost:8000/updateAccountInfo", true);
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send(jsonData);
 };
@@ -216,7 +216,7 @@ function myinfoUpdatePsw() {
 
             }
         }
-        xmlhttp.open("POST", "http://localhost:8080/updateAccountPsw", true);
+        xmlhttp.open("POST", "http://localhost:8000/updateAccountPsw", true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
         xmlhttp.send(jsonData);
     }
@@ -297,7 +297,7 @@ function salerToApply(data) {
 
         }
     }
-    xmlhttp.open("POST", "http://localhost:8080/salerApply", true);
+    xmlhttp.open("POST", "http://localhost:8000/salerApply", true);
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send(jsonData);
 
@@ -360,7 +360,7 @@ function myShoppingCart() {
         myTips("请先登录");
         return;
     }
-    var url = "http://localhost:8080/getShoppingCartList/" + account.id + "/" + mycurrentPage + "/" + 1;
+    var url = "http://localhost:8000/getShoppingCartList/" + account.id + "/" + mycurrentPage + "/" + 1;
     var na = "myCartList";
     personalAjax(url, na);
     var res0 = window.sessionStorage.getItem("myCartList");
@@ -401,7 +401,7 @@ function goodInfo(gid) {
     $.ajax({
         type: "get",
         dataType: "json",
-        url: "http://localhost:8080/getGoodInfoById/" + gid + "/" + aid,
+        url: "http://localhost:8000/getGoodInfoById/" + gid + "/" + aid,
         async: false,
         success: function (data) {
             console.log(data);
@@ -438,7 +438,7 @@ function delShoppingCart(gid) {
     $.ajax({
         type: "get",
         dataType: "json",
-        url: "http://localhost:8080/addShopCart/" + aid + "/" + gid,
+        url: "http://localhost:8000/addShopCart/" + aid + "/" + gid,
         async: false,
         success: function (data) {
             console.log(data);
@@ -527,7 +527,7 @@ function myAuction() {
         myTips("请先登录");
         return;
     }
-    var url = "http://localhost:8080/getAuctionRecord/" + account.id + "/" + mycurrentPage + "/" + 1;
+    var url = "http://localhost:8000/getAuctionRecord/" + account.id + "/" + mycurrentPage + "/" + 1;
     var na = "myAuctionRecordList";
     personalAjax(url, na);
     var res0 = window.sessionStorage.getItem("myAuctionRecordList");
@@ -575,7 +575,7 @@ function getMyAuctionInfo() {
             return;
         }
     }
-    var url = "http://localhost:8080/getMyAuction/" + account.id + "/" + mycurrentPage + "/" + 1;
+    var url = "http://localhost:8000/getMyAuction/" + account.id + "/" + mycurrentPage + "/" + 1;
     var na = "auctionInfoList";
     personalAjax(url, na);
     var res0 = window.sessionStorage.getItem("auctionInfoList");
@@ -642,7 +642,7 @@ function delMyGoods(gid) {
     $.ajax({
         type: "get",
         dataType: "json",
-        url: "http://localhost:8080/delMyGoods/" + aid + "/" + gid,
+        url: "http://localhost:8000/delMyGoods/" + aid + "/" + gid,
         async: false,
         success: function (data) {
             console.log(data);
@@ -660,7 +660,7 @@ function getMyOrderList() {
         myTips("请先登录");
         return;
     }
-    var url = "http://localhost:8080/getOrderList/" + account.id + "/" + mycurrentPage + "/" + 1;
+    var url = "http://localhost:8000/getOrderList/" + account.id + "/" + mycurrentPage + "/" + 1;
     var na = "MyOrderList";
     personalAjax(url, na);
     var res0 = window.sessionStorage.getItem("MyOrderList");

@@ -1,19 +1,21 @@
 package cn.valinaa.auction.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import cn.valinaa.auction.bean.AuctionRecord;
 import cn.valinaa.auction.bean.GoodAuction;
 import cn.valinaa.auction.bean.SalerInfo;
-import cn.valinaa.auction.service.AccountService;
 import cn.valinaa.auction.service.GoodsService;
-import cn.valinaa.auction.serviceImpl.AccountServiceImpl;
+import com.alibaba.fastjson2.JSONObject;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.xml.ws.spi.http.HttpContext;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Valinaa
@@ -22,13 +24,15 @@ import java.util.Map;
  * @Date: 2023-07-03 00:01
  */
 @RestController
+@Tag(name = "GoodsController", description = "商品相关接口")
 public class GoodsController {
 
     @Autowired
     private GoodsService goodsService;
 
 
-    @RequestMapping(value = "/savePic/{id}", method = RequestMethod.POST)
+    @PostMapping(value = "/savePic/{id}")
+    @Operation(summary = "保存图片", description = "savePic")
     public  Object savePic(MultipartFile file, @PathVariable Integer id){
         JSONObject r = new JSONObject();
        try {
@@ -44,87 +48,87 @@ public class GoodsController {
     }
 
 
-    @RequestMapping(value = "/saveGood", method = RequestMethod.POST)
+    @PostMapping(value = "/saveGood")
+    @Operation(summary = "保存商品信息", description = "saveGood")
     public  Object saveGoodInfo(@RequestBody GoodAuction goodAuction){
-        Object res =  goodsService.saveGoodInfo(goodAuction);
-        return res;
+        return goodsService.saveGoodInfo(goodAuction);
     }
 
 
-    @RequestMapping(value = "/salerApply", method = RequestMethod.POST)
+    @PostMapping(value = "/salerApply")
+    @Operation(summary = "卖家申请", description = "salerApply")
     public  Object salerApply(@RequestBody SalerInfo salerInfo){
-        Object res =  goodsService.salerApply(salerInfo);
-        return res;
+        return goodsService.salerApply(salerInfo);
     }
 
 
-    @RequestMapping(value = "/getAuctionList/{currentPage}/{pageSize}", method = RequestMethod.GET)
+    @GetMapping(value = "/getAuctionList/{currentPage}/{pageSize}")
+    @Operation(summary = "获取拍卖列表（分页）", description = "getAuctionList")
     public  Object getAuctionList(@PathVariable Integer currentPage, @PathVariable Integer pageSize){
-        Object res =  goodsService.getAuctionList(currentPage, pageSize);
-        return res;
+        return goodsService.getAuctionList(currentPage, pageSize);
     }
 
 
-    @RequestMapping(value = "/getGoodInfoById/{gid}/{aid}", method = RequestMethod.GET)
+    @GetMapping(value = "/getGoodInfoById/{gid}/{aid}")
+    @Operation(summary = "根据商品id获取商品信息", description = "getGoodInfoById")
     public  Object getGoodInfoById(@PathVariable Integer gid, @PathVariable Integer aid){
-        Object res =  goodsService.getGoodInfoById(gid, aid);
-        return res;
+        return goodsService.getGoodInfoById(gid, aid);
     }
 
 
-    @RequestMapping(value = "/addShopCart/{aid}/{gid}", method = RequestMethod.GET)
+    @GetMapping(value = "/addShopCart/{aid}/{gid}")
+    @Operation(summary = "添加购物车", description = "addShopCart")
     public  Object addShopCart(@PathVariable Integer aid, @PathVariable Integer gid){
-        Object res =  goodsService.addShopCart(aid, gid);
-        return res;
+        return goodsService.addShopCart(aid, gid);
     }
 
 
-    @RequestMapping(value = "/auction", method = RequestMethod.POST)
+    @PostMapping(value = "/auction")
+    @Operation(summary = "竞拍", description = "auction")
     public  Object auction(@RequestBody AuctionRecord auctionRecord){
-        Object res =  goodsService.auction(auctionRecord);
-        return res;
+        return goodsService.auction(auctionRecord);
     }
 
 
-    @RequestMapping(value = "/getShoppingCartList/{aid}/{curr}/{pageSize}", method = RequestMethod.GET)
+    @GetMapping(value = "/getShoppingCartList/{aid}/{curr}/{pageSize}")
+    @Operation(summary = "获取购物车列表", description = "getShoppingCartList")
     public  Object getShoppingCartList(@PathVariable Integer aid, @PathVariable Integer curr, @PathVariable Integer pageSize){
-        Object res =  goodsService.getShoppingCartList(aid, curr, pageSize);
-        return res;
+        return goodsService.getShoppingCartList(aid, curr, pageSize);
     }
 
 
-    @RequestMapping(value = "/getAuctionRecord/{aid}/{curr}/{pageSize}", method = RequestMethod.GET)
+    @GetMapping(value = "/getAuctionRecord/{aid}/{curr}/{pageSize}")
+    @Operation(summary = "获取竞拍记录", description = "getAuctionRecord")
     public  Object getAuctionRecord(@PathVariable Integer aid, @PathVariable Integer curr, @PathVariable Integer pageSize){
-        Object res =  goodsService.getAuctionRecord(aid, curr, pageSize);
-        return res;
+        return goodsService.getAuctionRecord(aid, curr, pageSize);
     }
 
 
-    @RequestMapping(value = "/getMyAuction/{aid}/{curr}/{pageSize}", method = RequestMethod.GET)
+    @GetMapping(value = "/getMyAuction/{aid}/{curr}/{pageSize}")
+    @Operation(summary = "获取我的拍卖", description = "getMyAuction")
     public  Object getMyAuction(@PathVariable Integer aid, @PathVariable Integer curr, @PathVariable Integer pageSize){
-        Object res =  goodsService.getMyAuction(aid, curr, pageSize);
-        return res;
+        return goodsService.getMyAuction(aid, curr, pageSize);
     }
 
 
 
-    @RequestMapping(value = "/getOrderList/{aid}/{curr}/{pageSize}", method = RequestMethod.GET)
+    @GetMapping(value = "/getOrderList/{aid}/{curr}/{pageSize}")
+    @Operation(summary = "获取订单列表", description = "getOrderList")
     public  Object getOrderList(@PathVariable Integer aid, @PathVariable Integer curr, @PathVariable Integer pageSize){
-        Object res =  goodsService.getOrderList(aid, curr, pageSize);
-        return res;
+        return goodsService.getOrderList(aid, curr, pageSize);
     }
 
 
-    @RequestMapping(value = "/delMyGoods/{aid}/{gid}", method = RequestMethod.GET)
+    @GetMapping(value = "/delMyGoods/{aid}/{gid}")
+    @Operation(summary = "删除我的商品", description = "delMyGoods")
     public  Object delMyGoods(@PathVariable Integer aid, @PathVariable Integer gid){
-        Object res =  goodsService.delMyGoods(aid, gid);
-        return res;
+        return goodsService.delMyGoods(aid, gid);
     }
 
-    @RequestMapping(value = "/searchAuctionList", method = RequestMethod.POST)
+    @PostMapping(value = "/searchAuctionList")
+    @Operation(summary = "搜索拍卖列表", description = "searchAuctionList")
     public  Object searchAuctionList(String condition, Integer curr, Integer pageSize){
-        Object res =  goodsService.searchAuctionList(condition, curr, pageSize);
-        return res;
+        return goodsService.searchAuctionList(condition, curr, pageSize);
     }
 
 

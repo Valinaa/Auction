@@ -56,13 +56,13 @@ $(function () {
             , startPrice: GoodInfo.now_price
             , myPlus: my_plus
             , status: GoodInfo.status
-            , eTime: GoodInfo.end_time
-            , sTime: GoodInfo.start_time
+            // , ETime: GoodInfo.end_time
+            // , STime: GoodInfo.start_time
         };
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "http://localhost:8080/auction",
+            url: "http://localhost:8000/auction",
             contentType:"application/json",
             data: JSON.stringify(myData),
 
@@ -100,7 +100,7 @@ $(function () {
         $.ajax({
             type: "get",
             dataType: "json",
-            url: "http://localhost:8080/addShopCart/" + account.id + "/" + GoodInfo.id,
+            url: "http://localhost:8000/addShopCart/" + account.id + "/" + GoodInfo.id,
 
             success: function (data) {
                 if (data.msg === "ok") {

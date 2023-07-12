@@ -1,7 +1,8 @@
 package cn.valinaa.auction.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import cn.valinaa.auction.mapper.GoodsMapper;
-import com.sun.deploy.util.StringUtils;
+//import com.sun.deploy.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +32,8 @@ public class DealOld implements Runnable{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String nowTime = formatter.format(LocalDateTime.now());
         List<Integer> idList = goodsMapper.getOldId(nowTime);
-        String[] ss = StringUtils.splitString(idList.toString(), "[]");
+        // todo 不确定正确
+        String[] ss = StringUtils.split(idList.toString(), "[]");
         String ids = "-1";
         if(ss.length != 0){
             ids += "," + ss[0];

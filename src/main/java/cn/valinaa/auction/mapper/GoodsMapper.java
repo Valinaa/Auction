@@ -63,7 +63,7 @@ public interface GoodsMapper {
     @Select("SELECT count(*) from shoppingcart where aid = #{aid} and gid = #{gid}")
     Integer shoppingCartIsExists(Integer aid, Integer gid);
 
-    @Insert("INSERT INTO `auctiononlinesys`.`shoppingcart`(`gid`, `aid`) VALUES (#{gid}, #{aid})")
+    @Insert("INSERT INTO `auction`.`shoppingcart`(`gid`, `aid`) VALUES (#{gid}, #{aid})")
     Integer saveShoppingCart(Integer aid, Integer gid);
 
 

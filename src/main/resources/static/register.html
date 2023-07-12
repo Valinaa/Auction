@@ -14,13 +14,13 @@
 
     function register() {
 
-        var data = {
+        const data = {
             "account": $("#registerAccount").val(),
             "password": $("#registerPsw").val()
         };
-        var jsonData = JSON.stringify(data);
+        const jsonData = JSON.stringify(data);
         console.log(jsonData);
-        var xmlhttp;
+        let xmlhttp;
         if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp=new XMLHttpRequest();
@@ -29,13 +29,16 @@
         {// code for IE6, IE5
             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
+        xmlhttp.open("POST","http://localhost:8000/register",true);
+        xmlhttp.setRequestHeader("Content-type","application/json");
+        xmlhttp.send(jsonData);
         xmlhttp.onreadystatechange=function()
         {
-            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            if (xmlhttp.readyState===4 && xmlhttp.status===200)
             {
                 console.log(xmlhttp.responseText);
-                var res = xmlhttp.responseText;
-                var j = $.parseJSON(res);
+                const res = xmlhttp.responseText;
+                const j = $.parseJSON(res);
                 if(j.msg === "ok"){
                     // $(".registerInfo").append("注册成功");
                     window.location.href = "./login.html";
@@ -45,10 +48,6 @@
 
             }
         }
-        xmlhttp.open("POST","http://localhost:8080/register",true);
-        xmlhttp.setRequestHeader("Content-type","application/json");
-        xmlhttp.send(jsonData);
-
 
     }
 

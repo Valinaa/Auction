@@ -1,6 +1,8 @@
 package cn.valinaa.auction.controller;
 
 import cn.valinaa.auction.service.LankerenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,77 +13,76 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2023-07-06 01:42
  */
 @RestController
+@Tag(name = "LankerenController", description = "管理员相关接口")
 public class LankerenController {
 
     @Autowired
     private LankerenService lankerenService;
 
-    @RequestMapping(value = "/getUserList", method = RequestMethod.GET)
+    @GetMapping(value = "/getUserList")
+    @Operation(summary = "获取用户列表",description = "getUserList")
     public  Object getUserList( Integer page,  Integer limit){
-        Object res =  lankerenService.getUserList(page, limit);
-        return res;
+        return lankerenService.getUserList(page, limit);
     }
 
-    @RequestMapping(value = "/getGoodAuctionList", method = RequestMethod.GET)
+    @GetMapping(value = "/getGoodAuctionList")
+    @Operation(summary = "获取商品列表",description = "getGoodAuctionList")
     public  Object getGoodAuctionList(@RequestParam("page") Integer curr, @RequestParam("limit") Integer pageSize){
-        Object res =  lankerenService.getGoodAuctionList(curr, pageSize);
-        return res;
+        return lankerenService.getGoodAuctionList(curr, pageSize);
     }
 
-    @RequestMapping(value = "/getAuctionRecordList", method = RequestMethod.GET)
+    @GetMapping(value = "/getAuctionRecordList")
+    @Operation(summary = "获取拍卖记录列表",description = "getAuctionRecordList")
     public  Object getAuctionRecordList(@RequestParam("page") Integer curr, @RequestParam("limit") Integer pageSize){
-        Object res =  lankerenService.getAuctionRecordList(curr, pageSize);
-        return res;
+        return lankerenService.getAuctionRecordList(curr, pageSize);
     }
 
-    @RequestMapping(value = "/getOrderList", method = RequestMethod.GET)
+    @GetMapping(value = "/getOrderList")
+    @Operation(summary = "获取订单列表",description = "getOrderList")
     public  Object getOrderList(@RequestParam("page") Integer curr, @RequestParam("limit") Integer pageSize){
-        Object res =  lankerenService.getOrderList(curr, pageSize);
-        return res;
+        return lankerenService.getOrderList(curr, pageSize);
     }
 
-    @RequestMapping(value = "/getSalerApply", method = RequestMethod.GET)
+    @GetMapping(value = "/getSalerApply")
+    @Operation(summary = "获取商家申请列表",description = "getSalerApply")
     public  Object getSalerApply(@RequestParam("page") Integer curr, @RequestParam("limit") Integer pageSize){
-        Object res =  lankerenService.getSalerApply(curr, pageSize);
-        return res;
+        return lankerenService.getSalerApply(curr, pageSize);
     }
 
-    @RequestMapping(value = "/forbiddenAccount/{aid}/{status}", method = RequestMethod.GET)
+    @GetMapping(value = "/forbiddenAccount/{aid}/{status}")
+    @Operation(summary = "禁用账号",description = "forbiddenAccount")
     public Object forbiddenAccount(@PathVariable Integer aid, @PathVariable Integer status){
-        Object res =  lankerenService.forbiddenAccount(aid, status);
-        return res;
+        return lankerenService.forbiddenAccount(aid, status);
     }
 
-    @RequestMapping(value = "/pswReset/{aid}", method = RequestMethod.GET)
+    @GetMapping(value = "/pswReset/{aid}")
+    @Operation(summary = "重置密码",description = "pswReset")
     public Object pswReset(@PathVariable Integer aid){
-        Object res =  lankerenService.pswReset(aid);
-        return res;
+        return lankerenService.pswReset(aid);
     }
 
 
-    @RequestMapping(value = "/delAccount/{aid}", method = RequestMethod.GET)
+    @GetMapping(value = "/delAccount/{aid}")
+    @Operation(summary = "删除账号",description = "delAccount")
     public Object delAccount(@PathVariable Integer aid){
-        Object res =  lankerenService.delAccount(aid);
-        return res;
+        return lankerenService.delAccount(aid);
     }
 
-    @RequestMapping(value = "/adsalerApply/{sid}/{status}", method = RequestMethod.GET)
+    @GetMapping(value = "/adsalerApply/{sid}/{status}")
+    @Operation(summary = "商家申请",description = "adsalerApply")
     public Object adsalerApply(@PathVariable Integer sid, @PathVariable Integer status){
-        Object res =  lankerenService.salerApply(sid, status);
-        return res;
+        return lankerenService.salerApply(sid, status);
     }
 
-    @RequestMapping(value = "/identityManagerInfoList", method = RequestMethod.GET)
+    @GetMapping(value = "/identityManagerInfoList")
+    @Operation(summary = "获取身份管理列表",description = "identityManagerInfoList")
     public Object identityManagerInfoList(){
-        Object res =  lankerenService.identityManagerInfoList();
-        return res;
+        return lankerenService.identityManagerInfoList();
     }
 
-    @RequestMapping(value = "/updateIndentityInfo/{aid}/{identity}", method = RequestMethod.GET)
+    @GetMapping(value = "/updateIndentityInfo/{aid}/{identity}")
+    @Operation(summary = "更新身份信息",description = "updateIndentityInfo")
     public Object updateIndentityInfo(@PathVariable Integer aid, @PathVariable Integer identity){
-        Object res =  lankerenService.updateIndentityInfo(aid, identity);
-        return res;
+        return lankerenService.updateIndentityInfo(aid, identity);
     }
-
-
 }

@@ -22,7 +22,7 @@ public class WebConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/picFiles/**").addResourceLocations("file:E:/JavaWorkPlace/PersonTest/AuctionOnlineSys/src/main/resources/static/imgs/goods/");
+        registry.addResourceHandler("/picFiles/**").addResourceLocations("file:E:/JavaWorkPlace/PersonTest/auction/src/main/resources/static/imgs/goods/");
     }
 
 }

@@ -1,6 +1,6 @@
 package cn.valinaa.auction.serviceImpl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import cn.valinaa.auction.bean.*;
@@ -127,8 +127,8 @@ public class GoodsServiceImpl implements GoodsService {
         JSONObject res = new JSONObject();
         Map<String, Object> goodInfo = goodsMapper.getGoodInfoById(gid, aid);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        goodInfo.put("start_time", formatter.format(((Timestamp) goodInfo.get("start_time")).toLocalDateTime()));
-        goodInfo.put("end_time", formatter.format(((Timestamp) goodInfo.get("end_time")).toLocalDateTime()));
+        goodInfo.put("start_time", formatter.format(((LocalDateTime)goodInfo.get("start_time"))));
+        goodInfo.put("end_time", formatter.format(( (LocalDateTime)goodInfo.get("end_time"))));
 
         res.put("GoodInfo", goodInfo);
         res.put("msg", "ok");
@@ -171,11 +171,13 @@ public class GoodsServiceImpl implements GoodsService {
                 goodsMapper.getGoodsStatus(auctionRecord.getGid()) != 1;
         if(b)
         { return res; }
+        auctionRecord.setStartTime(LocalDateTime.now ());
         auctionRecord.setNowPrice(auctionRecord.getStartPrice() + auctionRecord.getMyPlus());
+        auctionRecord.setEndTime(LocalDateTime.now ());
         auctionRecord.setCreateTime(LocalDateTime.now());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        auctionRecord.setEndTime(LocalDateTime.parse(auctionRecord.geteTime(), formatter));
-        auctionRecord.setStartTime(LocalDateTime.parse(auctionRecord.getsTime(), formatter));
+//        auctionRecord.setEndTime(LocalDateTime.parse(auctionRecord.getETime(), formatter));
+//        auctionRecord.setStartTime(LocalDateTime.parse(auctionRecord.getSTime(), formatter));
         Integer i = goodsMapper.saveAuctionRecord(auctionRecord);
         goodsMapper.updateNowPrice(auctionRecord.getGid(), auctionRecord.getNowPrice());
         if(i != 1){return res;}

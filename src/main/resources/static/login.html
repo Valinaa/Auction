@@ -7,10 +7,10 @@
 <link rel="stylesheet" type="text/css" href="css/reset200802.css"/>
 <link rel="stylesheet" type="text/css" href="css/login.css"/>
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
-<link rel="stylesheet" type="text/css" href="./layer/theme/default/layer.css"/>
+<link rel="stylesheet" type="text/css" href="layer/theme/default/layer.css"/>
 <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./layer/layer.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
 
 
 <script>
@@ -32,6 +32,9 @@
         {// code for IE6, IE5
             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
+        xmlhttp.open("POST","http://localhost:8000/login",true);
+        xmlhttp.setRequestHeader("Content-type","application/json");
+        xmlhttp.send(jsonData);
         xmlhttp.onreadystatechange=function()
         {
             if (xmlhttp.readyState==4 && xmlhttp.status==200)
@@ -51,9 +54,6 @@
 
             }
         }
-        xmlhttp.open("POST","http://localhost:8080/login",true);
-        xmlhttp.setRequestHeader("Content-type","application/json");
-        xmlhttp.send(jsonData);
     }
 
     function myTips(msg) {

@@ -9,17 +9,17 @@ Service
  * @Description:
  * @Date: 2023-07-12 18:43
  */
-public interface AccountService {
+ public interface AccountService {
 
-    public Object login(Account account);
+    Object login(Account account);
 
-    public Object register(Account account);
+    Object register(Account account);
 
-    public Object getAccountInfo(Account account);
+     Object getAccountInfo(Account account);
 
 
-    public Object updateAccountInfo(AccountInfo accountInfo);
+     Object updateAccountInfo(AccountInfo accountInfo);
 
-    public Object updateAccountPsw(String map);
+     Object updateAccountPsw(String map);
 
 }

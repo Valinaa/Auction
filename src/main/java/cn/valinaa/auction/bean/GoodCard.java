@@ -1,70 +1,29 @@
 package cn.valinaa.auction.bean;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author Valinaa
  * @Description:
  * @Date: 2023-07-04 17:37
  */
+@Schema(name = "GoodCard", description = "商品卡片")
+@Data
+@NoArgsConstructor
 public class GoodCard {
 
+    @Schema(name = "id", description = "商品id")
     private Integer id;
+    @Schema(name = "goodName", description = "商品名称")
     private String goodName;
+    @Schema(name = "pic", description = "商品图片")
     private String pic;
+    @Schema(name = "salerName", description = "卖家名称")
     private String salerName;
+    @Schema(name = "nowPrice", description = "当前价格")
     private Double nowPrice;
-    /**
-     *  竞拍人数.
-     */
+    @Schema(name = "aucNum", description = "竞拍人数")
     private Integer aucNum;
-
-    public GoodCard() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getGoodName() {
-        return goodName;
-    }
-
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
-    }
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
-    public String getSalerName() {
-        return salerName;
-    }
-
-    public void setSalerName(String salerName) {
-        this.salerName = salerName;
-    }
-
-    public Double getNowPrice() {
-        return nowPrice;
-    }
-
-    public void setNowPrice(Double nowPrice) {
-        this.nowPrice = nowPrice;
-    }
-
-    public Integer getAucNum() {
-        return aucNum;
-    }
-
-    public void setAucNum(Integer aucNum) {
-        this.aucNum = aucNum;
-    }
 }

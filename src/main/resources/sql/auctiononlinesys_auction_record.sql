@@ -18,4 +18,4 @@ create table auction_record
     create_time  datetime                 null comment '竞拍时间'
 );
 
-INSERT INTO auctiononlinesys.auction_record (id, good_name, start_price, now_price, my_plus, account_id, account_name, status, end_time, start_time, saler_id, gid, create_time) VALUES (1, '测试商品0', 50.00, 56.00, '6.0', 5, 'lankeren', '1', '2021-06-30 04:00:00', '2021-06-29 19:33:03', 5, 2, '2021-06-29 19:37:27');
+INSERT INTO auction.auction_record (id, good_name, start_price, now_price, my_plus, account_id, account_name, status, end_time, start_time, saler_id, gid, create_time) VALUES (1, '测试商品0', 50.00, 56.00, '6.0', 5, 'lankeren', '1', '2021-06-30 04:00:00', '2021-06-29 19:33:03', 5, 2, '2021-06-29 19:37:27');

@@ -1,20 +1,21 @@
 package cn.valinaa.auction.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import cn.valinaa.auction.bean.Account;
 import cn.valinaa.auction.bean.AccountInfo;
 import cn.valinaa.auction.service.AccountService;
+import com.alibaba.fastjson2.JSONObject;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * @author Valinaa
@@ -22,13 +23,16 @@ Controller
  * @Description:
  * @Date: 2023-07-12 18:42
  */
+
+@Tag(description = "账号相关接口", name = "AccountController")
 @RestController
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping(value = "/login")
+    @Operation(summary = "登录接口", description = "login")
     public Object login(@RequestBody Account account){
 
         JSONObject res = new JSONObject();
@@ -50,35 +54,36 @@ public class AccountController {
         return res;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping(value = "/register")
+    @Operation(summary = "注册接口", description = "register")
     public Object register(@RequestBody Account account){
-        Object res = accountService.register(account);
-        return res;
+        return accountService.register(account);
     }
 
 
-    @RequestMapping(value = "getAccountInfo", method = RequestMethod.POST)
+    @PostMapping(value = "getAccountInfo")
+    @Operation(summary = "获取账号信息", description = "getAccountInfo")
     public Object getAccountInfo(@RequestBody Account account){
-        Object res =  accountService.getAccountInfo(account);
-        return res;
+        return accountService.getAccountInfo(account);
     }
 
 
-    @RequestMapping(value = "updateAccountInfo", method = RequestMethod.POST)
+    @PostMapping(value = "updateAccountInfo")
+    @Operation(summary = "更新账号信息", description = "updateAccountInfo")
     public Object updateAccountInfo(@RequestBody AccountInfo accountInfo){
-        Object res =  accountService.updateAccountInfo(accountInfo);
-        return res;
+        return accountService.updateAccountInfo(accountInfo);
     }
 
 
-    @RequestMapping(value = "updateAccountPsw", method = RequestMethod.POST)
+    @PostMapping(value = "updateAccountPsw")
+    @Operation(summary = "更新账号密码", description = "updateAccountPsw")
     public Object updateAccountPsw(@RequestBody String map){
-        Object res =  accountService.updateAccountPsw(map);
-        return res;
+        return accountService.updateAccountPsw(map);
     }
 
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @GetMapping(value = "/logout")
+    @Operation(summary = "注销接口", description = "logout")
     public Object updateAccountPsw(){
         JSONObject res= new JSONObject();
         res.put("msg", "ok");

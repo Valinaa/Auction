@@ -1,6 +1,9 @@
 package cn.valinaa.auction.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -9,161 +12,45 @@ import java.time.LocalDateTime;
  * @Description:
  * @Date: 2023-07-03 09:07
  */
+@Schema(description = "商品拍卖",name = "GoodAuction")
+@Data
+@NoArgsConstructor
 public class GoodAuction {
 
+    @Schema(description = "商品id",name = "id")
     private Integer id;
+    @Schema(description = "商品名称",name = "goodName")
     private String goodName;
+    @Schema(description = "商品类型",name = "goodType")
     private Integer goodType;
+    @Schema(description = "商品起拍价",name = "startPrice")
     private Double startPrice;
+    @Schema(description = "商品加价",name = "pricePlus")
     private Double pricePlus;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "商品开始时间",name = "startTime")
     private LocalDateTime startTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "商品结束时间",name = "endTime")
     private LocalDateTime endTime;
+    @Schema(description = "拍卖人",name = "accountId")
     private Integer accountId;
+    @Schema(description = "商品描述",name = "goodsDec")
     private String goodsDec;
+    @Schema(description = "商品图片",name = "pic")
     private String pic;
+    @Schema(description = "商品状态",name = "status")
     private Integer status;
+    @Schema(description = "卖家名称",name = "salerName")
     private String salerName;
+    @Schema(description = "商品当前价格",name = "nowPrice")
     private Double nowPrice;
+    @Schema(name = "packMail", description = "包邮")
     private String packMail;
+    @Schema(name = "oimei", description = "假一赔十")
     private String oimei;
+    @Schema(description = "ensure",name = "协议保障")
     private String ensure;
-
-
-
-    public GoodAuction() {
-    }
-
-
-    public String getPackMail() {
-        return packMail;
-    }
-
-    public void setPackMail(String packMail) {
-        this.packMail = packMail;
-    }
-
-    public String getOimei() {
-        return oimei;
-    }
-
-    public void setOimei(String oimei) {
-        this.oimei = oimei;
-    }
-
-    public String getEnsure() {
-        return ensure;
-    }
-
-    public void setEnsure(String ensure) {
-        this.ensure = ensure;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getGoodName() {
-        return goodName;
-    }
-
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
-    }
-
-    public Integer getGoodType() {
-        return goodType;
-    }
-
-    public void setGoodType(Integer goodType) {
-        this.goodType = goodType;
-    }
-
-    public Double getStartPrice() {
-        return startPrice;
-    }
-
-    public void setStartPrice(Double startPrice) {
-        this.startPrice = startPrice;
-    }
-
-    public Double getPricePlus() {
-        return pricePlus;
-    }
-
-    public void setPricePlus(Double pricePlus) {
-        this.pricePlus = pricePlus;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public Integer getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
-    }
-
-    public String getGoodsDec() {
-        return goodsDec;
-    }
-
-    public void setGoodsDec(String goodsDec) {
-        this.goodsDec = goodsDec;
-    }
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getSalerName() {
-        return salerName;
-    }
-
-    public void setSalerName(String salerName) {
-        this.salerName = salerName;
-    }
-
-    public Double getNowPrice() {
-        return nowPrice;
-    }
-
-    public void setNowPrice(Double nowPrice) {
-        this.nowPrice = nowPrice;
-    }
-
     @Override
     public String toString() {
         return "GoodAuction{" +

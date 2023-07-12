@@ -3,7 +3,7 @@ package cn.valinaa.auction.config;
 import cn.valinaa.auction.shiro.MyShiroRealm;
 import cn.valinaa.auction.shiro.RoleFilter;
 import cn.valinaa.auction.shiro.ShiroFilterMapFactory;
-import jakarta.servlet.Filter;
+import javax.servlet.Filter;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
@@ -60,7 +60,7 @@ public class ShiroConfig {
     /**
      * web应用管理配置
      * @param shiroRealm
-     * @param cacheManager
+     * @ param cacheManager
      * @param manager
      * @return
      */

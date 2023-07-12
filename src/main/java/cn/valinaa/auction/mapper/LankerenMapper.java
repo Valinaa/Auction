@@ -28,18 +28,18 @@ public interface LankerenMapper {
     @Select("SELECT id, busine_name, saler_name, busine_contact, saler_email, apply_reason, account, `status` from saler_info ")
     List<Map<String, Object>> getSalerApply();
 
-    @Update("UPDATE `auctiononlinesys`.`account` SET `status` = #{status} WHERE `id` = #{aid} ")
+    @Update("UPDATE `auction`.`account` SET `status` = #{status} WHERE `id` = #{aid} ")
     Integer forbiddenAccount(Integer aid, Integer status);
 
-    @Update("UPDATE `auctiononlinesys`.`account` SET `password` = #{DefualtPsw} WHERE `id` = #{aid}")
+    @Update("UPDATE `auction`.`account` SET `password` = #{DefualtPsw} WHERE `id` = #{aid}")
     Integer pswReset(String DefualtPsw, Integer aid);
 
 
-    @Delete("DELETE FROM `auctiononlinesys`.`account` WHERE `id` = #{aid}")
+    @Delete("DELETE FROM `auction`.`account` WHERE `id` = #{aid}")
     Integer delAccount(Integer aid);
 
 
-    @Update("UPDATE `auctiononlinesys`.`saler_info` SET `status` = #{status} WHERE `id` = #{sid}")
+    @Update("UPDATE `auction`.`saler_info` SET `status` = #{status} WHERE `id` = #{sid}")
     Integer updateSalerInfo(Integer status, Integer sid);
 
 
@@ -47,7 +47,7 @@ public interface LankerenMapper {
     List<Map<String, Object>> identityManagerInfoList();
 
 
-    @Update("UPDATE `auctiononlinesys`.`account` SET `identity` = #{identity} WHERE `id` = #{aid}")
+    @Update("UPDATE `auction`.`account` SET `identity` = #{identity} WHERE `id` = #{aid}")
     Integer updateIndentityInfo(Integer identity, Integer aid);
 
     @Select("SELECT a.id from saler_info s " +

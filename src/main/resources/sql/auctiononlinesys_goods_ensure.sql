@@ -7,5 +7,5 @@ create table goods_ensure
     ensure    int null comment '协议保障'
 );
 
-INSERT INTO auctiononlinesys.goods_ensure (gid, pack_mail, oimei, ensure) VALUES (2, 1, 1, 0);
-INSERT INTO auctiononlinesys.goods_ensure (gid, pack_mail, oimei, ensure) VALUES (3, 1, 0, 1);
+INSERT INTO auction.goods_ensure (gid, pack_mail, oimei, ensure) VALUES (2, 1, 1, 0);
+INSERT INTO auction.goods_ensure (gid, pack_mail, oimei, ensure) VALUES (3, 1, 0, 1);

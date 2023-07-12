@@ -149,7 +149,7 @@ layui.use(['layer','table','form'], function() {
             // console.log(tr);
             console.log(tr[0].childNodes[8].childNodes[0].childNodes[1]);
             if(account!=null && account.identity === 3) {
-                var url = "http://localhost:8080/forbiddenAccount/" + parseInt(aid) + "/" + obj.data.status;
+                var url = "http://localhost:8000/forbiddenAccount/" + parseInt(aid) + "/" + obj.data.status;
                 $.ajax({
                     type: "get",
                     dataType: "json",
@@ -187,12 +187,12 @@ layui.use(['layer','table','form'], function() {
                 layer.close(index);
                 //向服务端发送删除指令
                 // var aid = tr[1].textContent;
-                var url = "http://localhost:8080/delAccount/" + parseInt(aid);
+                var url = "http://localhost:8000/delAccount/" + parseInt(aid);
                 adminAjax(url);
             });
         } else if (layEvent === "pswReset") {
             // var aid = tr[1].textContent;
-            var url = "http://localhost:8080/pswReset/" + parseInt(aid);
+            var url = "http://localhost:8000/pswReset/" + parseInt(aid);
             adminAjax(url);
         } else if(layEvent === "identityManager"){
             // 身份管理
@@ -200,7 +200,7 @@ layui.use(['layer','table','form'], function() {
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "http://localhost:8080/identityManagerInfoList",
+                url: "http://localhost:8000/identityManagerInfoList",
                 async: false,
                 success: function (res) {
                     // console.log(data);
@@ -256,7 +256,7 @@ layui.use(['layer','table','form'], function() {
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "http://localhost:8080/getGoodInfoById/" + gid + "/" + aid,
+                url: "http://localhost:8000/getGoodInfoById/" + gid + "/" + aid,
                 async: false,
                 success: function (data) {
                     console.log(data);
@@ -345,7 +345,7 @@ layui.use(['layer','table','form'], function() {
             //
             console.log(tr[1].textContent);
             // adsalerApply
-            var url = "http://localhost:8080/adsalerApply/" + sid + "/" + agree;
+            var url = "http://localhost:8000/adsalerApply/" + sid + "/" + agree;
 
             $.ajax({
                 type: "get",
@@ -380,7 +380,7 @@ layui.use(['layer','table','form'], function() {
             });
         } else if (layEvent === "refuse") {
             console.log("refuse");
-            var url = "http://localhost:8080/adsalerApply/" + sid + "/" + refuse;
+            var url = "http://localhost:8000/adsalerApply/" + sid + "/" + refuse;
 
             $.ajax({
                 type: "get",
@@ -415,7 +415,7 @@ function getGoodsInfoByOrder(gid) {
     $.ajax({
         type: "get",
         dataType: "json",
-        url: "http://localhost:8080/getGoodInfoById/" + gid + "/" + aid,
+        url: "http://localhost:8000/getGoodInfoById/" + gid + "/" + aid,
         async: false,
         success: function (data) {
             console.log(data);
@@ -436,7 +436,7 @@ function updateIndentityInfo(aid, identity) {
     $.ajax({
         type: "get",
         dataType: "json",
-        url: "http://localhost:8080/updateIndentityInfo/" + aid + "/" + identity,
+        url: "http://localhost:8000/updateIndentityInfo/" + aid + "/" + identity,
         success: function (res) {
             // console.log(data);
             if (res.msg === "ok" ){
