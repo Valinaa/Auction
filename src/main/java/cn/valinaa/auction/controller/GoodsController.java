@@ -131,6 +131,10 @@ public class GoodsController {
         return goodsService.searchAuctionList(condition, curr, pageSize);
     }
 
-
+    @GetMapping(value = "/getGoodsList/{curr}/{pageSize}")
+    @Operation(summary = "获取商品列表", description = "getGoodsList")
+    public  Object getGoodsList(@PathVariable Integer curr, @PathVariable Integer pageSize){
+        return goodsService.getGoodsList(curr, pageSize);
+    }
 
 }

@@ -1,5 +1,6 @@
 package cn.valinaa.auction.serviceImpl;
 
+import cn.valinaa.auction.enums.ResultCodeEnum;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -257,4 +258,16 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
 
+    @Override
+    public Result<List<GoodAuction>> getGoodsList(Integer curr, Integer pageSize){
+        JSONObject res = new JSONObject();
+        try {
+            PageHelper.startPage(curr, pageSize);
+            List<GoodAuction> list = goodsMapper.getGoodsList();
+            return Result.success(list);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.failure(ResultCodeEnum.GET_FAILED);
+        }
+    }
 }

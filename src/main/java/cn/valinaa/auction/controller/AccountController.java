@@ -2,6 +2,8 @@ package cn.valinaa.auction.controller;
 
 import cn.valinaa.auction.bean.Account;
 import cn.valinaa.auction.bean.AccountInfo;
+import cn.valinaa.auction.bean.Result;
+import cn.valinaa.auction.enums.ResultCodeEnum;
 import cn.valinaa.auction.service.AccountService;
 import com.alibaba.fastjson2.JSONObject;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,9 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Valinaa
@@ -33,9 +36,9 @@ public class AccountController {
 
     @PostMapping(value = "/login")
     @Operation(summary = "登录接口", description = "login")
-    public Object login(@RequestBody Account account){
+    public Result<Map<String,Account>> login(@RequestBody Account account){
 
-        JSONObject res = new JSONObject();
+        Map<String,Account> res = new HashMap<>();
 
         // 登录认证
         UsernamePasswordToken token = new UsernamePasswordToken(account.getAccount(), account.getPassword());
@@ -43,15 +46,13 @@ public class AccountController {
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-            res.put("msg", "ok");
             Account realAccount = (Account)subject.getPrincipal();
             realAccount.setPassword("null");
             res.put("account", realAccount);
+            return Result.success(res);
         }catch (Exception e){
-            res.put("msg", "f");
-            res.put("error", e.getMessage());
+            return Result.failure(ResultCodeEnum.LOGIN_ERROR);
         }
-        return res;
     }
 
     @PostMapping(value = "/register")
