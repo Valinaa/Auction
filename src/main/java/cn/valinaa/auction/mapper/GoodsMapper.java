@@ -119,6 +119,7 @@ public interface GoodsMapper {
             "ORDER BY end_time ASC")
     List<GoodCard> searchAuctionList(String nowTime, String condition);
 
-
+    @Select("SELECT * from goods_auction")
+    List<GoodAuction> getGoodsList();
 
 }

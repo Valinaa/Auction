@@ -33,4 +33,5 @@ import org.springframework.web.multipart.MultipartFile;
 
      Object searchAuctionList(String condition, Integer curr, Integer pageSize);
 
+     Object getGoodsList(Integer curr, Integer pageSize);
 }
