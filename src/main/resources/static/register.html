@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AuctionOnlineSys-注册-By-Lankeren</title>
+    <title>注册</title>
 </head>
 <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -16,7 +16,9 @@
 
         const data = {
             "account": $("#registerAccount").val(),
-            "password": $("#registerPsw").val()
+            "password": $("#registerPsw").val(),
+            "name": $("#registerName").val(),
+            "identity": $("#registerIdentity").val(),
         };
         const jsonData = JSON.stringify(data);
         console.log(jsonData);
@@ -68,7 +70,7 @@
 
             <!--  中间文字  -->
             <div class="left-center-word">
-                <p>AuctionOnlineSys-网上拍卖系统</p>
+                <p>网上拍卖系统</p>
                 <span>By-Lankeren</span>
             </div>
         </div>
@@ -88,7 +90,20 @@
                     <form action="" method="post">
                         <div class="input-group">
                             <span class="input-group-addon">账号</span>
-                            <input type="text" class="form-control" id="registerAccount" name="account" placeholder="">
+                            <input type="text" class="form-control" id="registerAccount" name="account" placeholder="用于登录">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">姓名</span>
+                            <input type="text" class="form-control" id="registerName" name="name" placeholder="用于展示的名称">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">身份</span>
+                            <select id="registerIdentity" class="form-control" name="identity" placeholder="">
+                                <option value="2">普通成员</option>
+                                <option value="4">VIP成员</option>
+                            </select>
                         </div>
                         <br>
                         <div class="input-group">

@@ -4,16 +4,14 @@ import cn.valinaa.auction.bean.AuctionRecord;
 import cn.valinaa.auction.bean.GoodAuction;
 import cn.valinaa.auction.bean.SalerInfo;
 import cn.valinaa.auction.service.GoodsService;
+import cn.valinaa.auction.utils.RedisUtil;
 import com.alibaba.fastjson2.JSONObject;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,9 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "GoodsController", description = "商品相关接口")
 public class GoodsController {
 
-    @Autowired
-    private GoodsService goodsService;
+    private final GoodsService goodsService;
 
+    public GoodsController(GoodsService goodsService) {
+        this.goodsService = goodsService;
+    }
 
     @PostMapping(value = "/savePic/{id}")
     @Operation(summary = "保存图片", description = "savePic")
@@ -110,7 +110,11 @@ public class GoodsController {
         return goodsService.getMyAuction(aid, curr, pageSize);
     }
 
-
+    @GetMapping(value = "/getAuctionRank/{gid}")
+    @Operation(summary = "获取拍卖排行", description = "getAuctionRank")
+    public Object getAuctionRank(@PathVariable Integer gid){
+        return goodsService.getAuctionRank(gid,1,100);
+    }
 
     @GetMapping(value = "/getOrderList/{aid}/{curr}/{pageSize}")
     @Operation(summary = "获取订单列表", description = "getOrderList")

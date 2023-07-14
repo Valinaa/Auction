@@ -1,24 +1,24 @@
 package cn.valinaa.auction.serviceImpl;
 
 import cn.valinaa.auction.enums.ResultCodeEnum;
+import cn.valinaa.auction.utils.RedisUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import cn.valinaa.auction.bean.*;
 import cn.valinaa.auction.enums.Constant;
-import cn.valinaa.auction.mapper.AccountMapper;
 import cn.valinaa.auction.mapper.GoodsMapper;
 import cn.valinaa.auction.service.GoodsService;
 import cn.valinaa.auction.utils.DealOld;
 import cn.valinaa.auction.utils.MFileUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,14 +32,15 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class GoodsServiceImpl implements GoodsService {
 
-    @Autowired
-    private GoodsMapper goodsMapper;
+    private final GoodsMapper goodsMapper;
 
-    @Autowired
-    private AccountMapper accountMapper;
+    private final RedisUtil redisUtil;
 
-    private static volatile Map<Integer, Object> picPathWrapper = new ConcurrentHashMap<>();
-
+    private static final Map<Integer, Object> picPathWrapper = new ConcurrentHashMap<>();
+    public GoodsServiceImpl(GoodsMapper goodsMapper,RedisUtil redisUtil) {
+        this.goodsMapper = goodsMapper;
+        this.redisUtil = redisUtil;
+    }
 
     @Override
     @Transactional(rollbackFor = {RuntimeException.class, Error.class})
@@ -118,7 +119,7 @@ public class GoodsServiceImpl implements GoodsService {
             new Thread(new DealOld(goodsMapper)).start();
         }catch (Exception e){
             res0.put("msg", "f");
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res0;
     }
@@ -147,7 +148,7 @@ public class GoodsServiceImpl implements GoodsService {
         try {
             Integer exists = goodsMapper.shoppingCartAddDel(aid, gid);
             if(exists > 0){
-                res.put("msg", "cancle");
+                res.put("msg", "cancel");
                 return res;
             }else if(exists == 0){
                 int i = goodsMapper.saveShoppingCart(aid, gid);
@@ -176,9 +177,6 @@ public class GoodsServiceImpl implements GoodsService {
         auctionRecord.setNowPrice(auctionRecord.getStartPrice() + auctionRecord.getMyPlus());
         auctionRecord.setEndTime(LocalDateTime.now ());
         auctionRecord.setCreateTime(LocalDateTime.now());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        auctionRecord.setEndTime(LocalDateTime.parse(auctionRecord.getETime(), formatter));
-//        auctionRecord.setStartTime(LocalDateTime.parse(auctionRecord.getSTime(), formatter));
         Integer i = goodsMapper.saveAuctionRecord(auctionRecord);
         goodsMapper.updateNowPrice(auctionRecord.getGid(), auctionRecord.getNowPrice());
         if(i != 1){return res;}
@@ -189,21 +187,21 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Object getShoppingCartList(Integer aid, Integer curr, Integer pageSize) {
         PageHelper.startPage(curr, pageSize);
-        return theSame(aid, curr, pageSize, goodsMapper.getShoppingCartList(aid), "list");
+        return theSame(aid, goodsMapper.getShoppingCartList(aid));
     }
 
     @Override
     public Object getAuctionRecord(Integer aid, Integer curr, Integer pageSize) {
         PageHelper.startPage(curr, pageSize);
-        return theSame(aid, curr, pageSize, goodsMapper.getAuctionRecord(aid) , "list");
+        return theSame(aid, goodsMapper.getAuctionRecord(aid));
     }
 
-    private Object theSame(Integer aid, Integer curr, Integer pageSize, List<Map<String, Object>> list, String name){
+    private Object theSame(Integer aid, List<Map<String, Object>> list){
         JSONObject res = new JSONObject();
         res.put("msg", "f");
         if(aid == null){ return res; }
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(list);
-        res.put(name, list);
+        res.put("list", list);
         res.put("msg", "ok");
         res.put("totalSize", pageInfo.getPages());
         return res;
@@ -212,13 +210,44 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Object getMyAuction(Integer aid, Integer curr, Integer pageSize) {
         PageHelper.startPage(curr, pageSize);
-        return theSame(aid, curr, pageSize, goodsMapper.getMyAuction(aid) , "list");
+        return theSame(aid, goodsMapper.getMyAuction(aid));
     }
-
+    @Override
+    public Object getAuctionRank(Integer gid,Integer curr, Integer pageSize) {
+        List<Map<String, Object>> oneAuctionsRecord = null;
+        try {
+            PageHelper.startPage(curr, pageSize);
+            oneAuctionsRecord = goodsMapper.getAuctionRank(gid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(oneAuctionsRecord == null || oneAuctionsRecord.size() == 0){
+            return Result.build(null,  5000, "该商品暂无人竞拍");
+        }
+        String goodName = oneAuctionsRecord.get(0).get("good_name").toString();
+        oneAuctionsRecord.forEach(e -> {
+            Object temp=redisUtil.score(goodName, e.get("account_name").toString());
+            double highestPrice = temp==null?-1:Double.parseDouble(temp.toString());
+            double nowPrice=Double.parseDouble(e.get("now_price").toString());
+            redisUtil.addZset(goodName, e.get("account_name").toString() ,Math.max(highestPrice,nowPrice));
+        });
+        List<Map<String,String>> res=new LinkedList<>();
+        redisUtil.reverseRangeWithScores(goodName,0,9).forEach(e -> {
+            String account= (String) e.getValue();
+            double score = e.getScore()==null?Integer.MAX_VALUE:e.getScore();
+            long rank=redisUtil.reverseRank(goodName,account);
+            res.add(new HashMap<>() {{
+                put("name", account);
+                put("price", String.valueOf(score));
+                put("rank", String.valueOf(rank + 1));
+            }});
+        });
+        return Result.success(res);
+    }
     @Override
     public Object getOrderList(Integer aid, Integer curr, Integer pageSize) {
         PageHelper.startPage(curr, pageSize);
-        return theSame(aid, curr, pageSize, goodsMapper.getOrderList(aid) , "list");
+        return theSame(aid, goodsMapper.getOrderList(aid));
     }
 
     @Override
@@ -252,7 +281,7 @@ public class GoodsServiceImpl implements GoodsService {
             res0.put("data", res1);
         }catch (Exception e){
             res0.put("msg", "f");
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res0;
     }
@@ -260,7 +289,6 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Result<List<GoodAuction>> getGoodsList(Integer curr, Integer pageSize){
-        JSONObject res = new JSONObject();
         try {
             PageHelper.startPage(curr, pageSize);
             List<GoodAuction> list = goodsMapper.getGoodsList();

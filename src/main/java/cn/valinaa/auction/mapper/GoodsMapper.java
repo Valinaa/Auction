@@ -92,6 +92,10 @@ public interface GoodsMapper {
     @Select("SELECT a.id , a.good_name, a.now_price, a.my_plus, a.`status`, a.gid, a.create_time from auction_record a WHERE account_id = #{aid}")
     List<Map<String, Object>> getAuctionRecord(Integer aid);
 
+    @Select("SELECT a.good_name,a.start_price, a.now_price, a.gid, a.create_time,a.`status`,a.saler_id,a.account_name,a.account_id" +
+            " from auction_record a WHERE gid = #{gid}")
+    List<Map<String, Object>> getAuctionRank(Integer gid);
+
     @Select("SELECT g.id, g.good_name, g.end_time, g.start_price, g.now_price, g.`status` , (SELECT o.`status` from `order` o WHERE o.goods_id = g.id ) orderStatus " +
             "from goods_auction g where account_id = #{aid}")
     List<Map<String , Object>> getMyAuction(Integer aid);

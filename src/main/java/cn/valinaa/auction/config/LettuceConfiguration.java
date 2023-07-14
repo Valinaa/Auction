@@ -1,5 +1,4 @@
-package cn.valinaa.cloud.common.config;
-
+package cn.valinaa.auction.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -7,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -25,6 +23,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Duration;
 
@@ -38,7 +37,7 @@ import java.time.Duration;
 @RequiredArgsConstructor
 @Slf4j
 @SuppressWarnings("all")
-public class LettuceRedisConfiguration extends CachingConfigurerSupport {
+public class LettuceConfiguration extends CachingConfigurerSupport {
     
     private final LettuceConnectionFactory connectionFactory;
     
@@ -82,7 +81,7 @@ public class LettuceRedisConfiguration extends CachingConfigurerSupport {
      * @see RedisTemplate
      * @see Serializable
      */
-    @Bean("SimpleRedisTemplate")
+    @Bean
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         // 设置连接工厂，源码默认
@@ -93,7 +92,6 @@ public class LettuceRedisConfiguration extends CachingConfigurerSupport {
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        //om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);  //已过时
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
         // 序列化key与value
@@ -139,7 +137,7 @@ public class LettuceRedisConfiguration extends CachingConfigurerSupport {
                 // 设置value 为自动转Json的Object
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
                 //! 不缓存null
-                // .disableCachingNullValues()
+                 .disableCachingNullValues()
                 //! 设置缓存的过期时间
                 .entryTtl(duration);
     }

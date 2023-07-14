@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
-    <title>AuctionOnlineSys-登录-By-Lankeren</title>
+    <title>登录</title>
 </head>
 <link rel="stylesheet" type="text/css" href="css/reset200802.css"/>
 <link rel="stylesheet" type="text/css" href="css/login.css"/>
@@ -42,10 +42,11 @@
                 // console.log(xmlhttp.responseText);
                 var res = xmlhttp.responseText;
                 var j = $.parseJSON(res);
-                if(j.msg === "ok"){
+                console.log(j);
+                if(j.code === 200){
                     // var storage = window.localStorage;
                     var storage = window.sessionStorage;
-                    storage.setItem("account", JSON.stringify(j.account));
+                    storage.setItem("account", JSON.stringify(j.data.account));
                     window.location.href = "./index.html";
                 }else if(j.msg === "f"){
                     console.log("用户名密码错误 或者 你的账号已被锁定~联系管理解锁");
@@ -76,7 +77,7 @@
 
             <!--  中间文字  -->
             <div class="left-center-word">
-                <p>AuctionOnlineSys-网上拍卖系统</p>
+                <p>网上拍卖系统</p>
                 <span>By-Lankeren</span>
             </div>
         </div>

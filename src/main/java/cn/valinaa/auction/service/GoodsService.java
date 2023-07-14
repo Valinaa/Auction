@@ -5,7 +5,10 @@ import cn.valinaa.auction.bean.GoodAuction;
 import cn.valinaa.auction.bean.SalerInfo;
 import org.springframework.web.multipart.MultipartFile;
 
- public interface GoodsService {
+import java.util.List;
+import java.util.Map;
+
+public interface GoodsService {
 
      Object saveGoodInfo(GoodAuction goodAuction);
 
@@ -26,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
      Object getAuctionRecord(Integer aid, Integer curr, Integer pageSize);
 
      Object getMyAuction(Integer aid, Integer curr, Integer pageSize);
+     Object getAuctionRank(Integer gid,Integer curr, Integer pageSize);
 
      Object getOrderList(Integer aid, Integer curr, Integer pageSize);
 

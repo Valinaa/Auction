@@ -1,6 +1,8 @@
 package cn.valinaa.auction.serviceImpl;
 
 
+import cn.valinaa.auction.bean.Result;
+import cn.valinaa.auction.enums.ResultCodeEnum;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -10,6 +12,7 @@ import cn.valinaa.auction.service.LankerenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -131,20 +134,17 @@ public class LankerenServiceImpl implements LankerenService {
     }
 
 
-    private Object theSame(List<Map<String, Object>> list){
-        JSONObject res1 = new JSONObject();
+    private Result<Map<String,Object>> theSame(List<Map<String, Object>> list){
+        Map<String,Object> res1 = new HashMap<>();
         try {
             PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(list);
-            res1.put("msg", "ok");
-            res1.put("code", "0");
             res1.put("data", list);
             res1.put("count", pageInfo.getTotal());
+            return Result.success(res1);
         }catch (Exception e){
-            res1.put("msg", "f");
             res1.put("count", 0);
-            return  res1;
+            return  Result.failure(res1,ResultCodeEnum.GET_FAILED);
         }
-        return res1;
     }
 
 }

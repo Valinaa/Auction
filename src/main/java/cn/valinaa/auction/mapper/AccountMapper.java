@@ -10,7 +10,7 @@ public interface AccountMapper {
     @Select("select * from account where account = #{account} and status = 1")
     Account getAccountByaccount(String account);
 
-    @Insert("INSERT INTO `account`(`account`, `password`, `reg_time`) VALUES (#{account}, #{password}, #{regTime})")
+    @Insert("INSERT INTO `account`(`name`,`account`, `password`,`identity`, `reg_time`) VALUES (#{name},#{account}, #{password},#{identity}, #{regTime})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int registerAccount(Account account);
 
