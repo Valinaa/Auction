@@ -9,6 +9,9 @@ public interface AccountMapper {
 
     @Select("select * from account where account = #{account} and status = 1")
     Account getAccountByaccount(String account);
+    
+    @Select("select * from account where id = #{accountId}")
+    Account getAccountByAccountId(Integer accountId);
 
     @Insert("INSERT INTO `account`(`name`,`account`, `password`,`identity`, `reg_time`) VALUES (#{name},#{account}, #{password},#{identity}, #{regTime})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
@@ -24,7 +27,7 @@ public interface AccountMapper {
     Integer getAccountIdByAccountWIden(String account, Integer identity);
 
     @Select("SELECT * from account_info where aid = #{aid}")
-    AccountInfo getAccountInfoByaid(Integer aid);
+    AccountInfo getAccountInfoByAid(Integer aid);
 
     @Select("SELECT a.`name`, a.account, a.identity, b.* from account a " +
             "LEFT JOIN account_info b on a.id = b.aid " +

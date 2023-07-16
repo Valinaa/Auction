@@ -45,26 +45,27 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional(rollbackFor = {RuntimeException.class, Error.class})
     public Object saveGoodInfo(GoodAuction goodAuction) {
-        JSONObject res = new JSONObject();
-        res.put("msg", "f");
         boolean b= goodAuction.getGoodType() == null || goodAuction.getStartPrice() == null || goodAuction.getPricePlus() == null;
-        if(b){ return  res;}
+        if(b){ return  Result.failure(ResultCodeEnum.NO_SUCH_RECORD);}
         Integer id = goodAuction.getAccountId();
         if(goodsMapper.getIdentity(id) < Constant.SalerUser){
-            return res;
+            return Result.failure(ResultCodeEnum.PERMISSION);
         }
-        goodAuction.setPic((String)picPathWrapper.get(id));
-        picPathWrapper.remove(id);
-        goodAuction.setStartTime(LocalDateTime.now());
+//        goodAuction.setPic((String)picPathWrapper.get(id));
+//        picPathWrapper.remove(id);
+        goodAuction.setStatus(2);
+        if(goodAuction.getStartTime().isBefore(LocalDateTime.now())){
+            goodAuction.setStartTime(LocalDateTime.now());
+            goodAuction.setStatus(1);
+        }
         goodAuction.setNowPrice(goodAuction.getStartPrice());
         int f = goodsMapper.saveGoodInfo(goodAuction);
-        GoodEnsure goodEnsure = new GoodEnsure(goodAuction);
-        goodsMapper.saveGoodEnsure(goodEnsure);
+//        GoodEnsure goodEnsure = new GoodEnsure(goodAuction);
+//        goodsMapper.saveGoodEnsure(goodEnsure);
         if(f == 0){
-            return res;
+            return Result.failure(ResultCodeEnum.FAIL);
         }
-        res.put("msg", "ok");
-        return res;
+        return Result.success();
     }
 
     @Override
@@ -125,63 +126,64 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Object getGoodInfoById(Integer gid, Integer aid) {
-        JSONObject res = new JSONObject();
+    public Result<Map<String, Object>> getGoodInfoById(Integer gid, Integer aid) {
         Map<String, Object> goodInfo = goodsMapper.getGoodInfoById(gid, aid);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         goodInfo.put("start_time", formatter.format(((LocalDateTime)goodInfo.get("start_time"))));
         goodInfo.put("end_time", formatter.format(( (LocalDateTime)goodInfo.get("end_time"))));
-
-        res.put("GoodInfo", goodInfo);
-        res.put("msg", "ok");
-
-        return res;
+        return Result.success(goodInfo);
     }
 
     @Override
+    public Object getRecentRecordByGid(Integer gid){
+        AuctionRecord ar;
+        try{
+            ar=goodsMapper.getRecentRecordByGid(gid);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.failure(ResultCodeEnum.FAIL);
+        }
+        return Result.success(ar);
+    }
+    @Override
     public Object addShopCart(Integer aid, Integer gid) {
-        JSONObject res = new JSONObject();
         if(aid == null || gid == null){
-            res.put("msg", "f");
-            return res;
+            return Result.failure(ResultCodeEnum.NO_SUCH_RECORD);
         }
         try {
             Integer exists = goodsMapper.shoppingCartAddDel(aid, gid);
             if(exists > 0){
-                res.put("msg", "cancel");
-                return res;
+                return Result.success();
+                
             }else if(exists == 0){
                 int i = goodsMapper.saveShoppingCart(aid, gid);
                 if(i > 0){
-                    res.put("msg", "ok");
+                    return Result.success();
                 }
             }
         }catch (Exception e){
-            res.put("msg", "f");
-            return res;
+            return Result.failure(ResultCodeEnum.FAIL);
         }
-        return res;
+        return Result.failure(ResultCodeEnum.FAIL);
     }
 
     @Override
     @Transactional(rollbackFor = {RuntimeException.class, Error.class})
     public Object auction(AuctionRecord auctionRecord) {
-        JSONObject res = new JSONObject();
-        res.put("msg", "f");
         boolean b = auctionRecord == null || auctionRecord.getMyPlus() == null ||
                 auctionRecord.getMyPlus() < goodsMapper.getMixPricePlus(auctionRecord.getGid()) ||
                 goodsMapper.getGoodsStatus(auctionRecord.getGid()) != 1;
         if(b)
-        { return res; }
+        { return Result.failure(ResultCodeEnum.NO_SUCH_RECORD); }
         auctionRecord.setStartTime(LocalDateTime.now ());
         auctionRecord.setNowPrice(auctionRecord.getStartPrice() + auctionRecord.getMyPlus());
         auctionRecord.setEndTime(LocalDateTime.now ());
         auctionRecord.setCreateTime(LocalDateTime.now());
         Integer i = goodsMapper.saveAuctionRecord(auctionRecord);
         goodsMapper.updateNowPrice(auctionRecord.getGid(), auctionRecord.getNowPrice());
-        if(i != 1){return res;}
-        res.put("msg", "ok");
-        return res;
+        if(i != 1){return Result.failure(ResultCodeEnum.DATA_ERROR);}
+        return Result.success();
     }
 
     @Override
@@ -197,14 +199,12 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     private Object theSame(Integer aid, List<Map<String, Object>> list){
-        JSONObject res = new JSONObject();
-        res.put("msg", "f");
-        if(aid == null){ return res; }
+//        Map<String, Object> res = new HashMap<>(4);
+        if(aid == null){ return Result.failure(ResultCodeEnum.NO_SUCH_RECORD); }
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(list);
-        res.put("list", list);
-        res.put("msg", "ok");
-        res.put("totalSize", pageInfo.getPages());
-        return res;
+//        res.put("list", list);
+//        res.put("totalSize", pageInfo.getPages());
+        return Result.success(list);
     }
 
     @Override

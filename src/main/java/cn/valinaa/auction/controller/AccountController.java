@@ -5,17 +5,13 @@ import cn.valinaa.auction.bean.AccountInfo;
 import cn.valinaa.auction.bean.Result;
 import cn.valinaa.auction.enums.ResultCodeEnum;
 import cn.valinaa.auction.service.AccountService;
-import com.alibaba.fastjson2.JSONObject;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,14 +63,24 @@ public class AccountController {
     public Object getAccountInfo(@RequestBody Account account){
         return accountService.getAccountInfo(account);
     }
-
-
+    
+    
+    @GetMapping(value = "getUserInfo/{aid}")
+    @Operation(summary = "获取用户信息", description = "getUserInfo")
+    public Object getUserInfo(@PathVariable Integer aid){
+        return accountService.getAccountInfoByAid(aid);
+    }
+    
     @PostMapping(value = "updateAccountInfo")
     @Operation(summary = "更新账号信息", description = "updateAccountInfo")
     public Object updateAccountInfo(@RequestBody AccountInfo accountInfo){
         return accountService.updateAccountInfo(accountInfo);
     }
 
+    @GetMapping(value="getAccountByAccountId/{accountId}")
+    public Object getAccountByAccountId(@PathVariable Integer accountId){
+        return accountService.getAccountByAccountId(accountId);
+    }
 
     @PostMapping(value = "updateAccountPsw")
     @Operation(summary = "更新账号密码", description = "updateAccountPsw")
@@ -86,11 +92,9 @@ public class AccountController {
     @GetMapping(value = "/logout")
     @Operation(summary = "注销接口", description = "logout")
     public Object updateAccountPsw(){
-        JSONObject res= new JSONObject();
-        res.put("msg", "ok");
         Subject lvSubject=SecurityUtils.getSubject();
         lvSubject.logout();
-        return res;
+        return Result.success();
     }
 
 

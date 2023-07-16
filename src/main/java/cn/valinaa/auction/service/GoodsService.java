@@ -5,9 +5,6 @@ import cn.valinaa.auction.bean.GoodAuction;
 import cn.valinaa.auction.bean.SalerInfo;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Map;
-
 public interface GoodsService {
 
      Object saveGoodInfo(GoodAuction goodAuction);
@@ -19,9 +16,8 @@ public interface GoodsService {
      Object getAuctionList(Integer currentPage, Integer pageSize);
 
      Object getGoodInfoById(Integer gid, Integer aid);
-
+     Object getRecentRecordByGid(Integer gid);
      Object addShopCart(Integer aid, Integer gid);
-
      Object auction(AuctionRecord auctionRecord);
 
      Object getShoppingCartList(Integer aid, Integer curr, Integer pageSize);

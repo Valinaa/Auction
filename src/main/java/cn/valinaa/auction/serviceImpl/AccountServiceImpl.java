@@ -1,10 +1,12 @@
 package cn.valinaa.auction.serviceImpl;
 
-import com.alibaba.fastjson2.JSONObject;
 import cn.valinaa.auction.bean.Account;
 import cn.valinaa.auction.bean.AccountInfo;
+import cn.valinaa.auction.bean.Result;
+import cn.valinaa.auction.enums.ResultCodeEnum;
 import cn.valinaa.auction.mapper.AccountMapper;
 import cn.valinaa.auction.service.AccountService;
+import com.alibaba.fastjson2.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,67 +43,75 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Object register(Account account) {
-        JSONObject res = new JSONObject();
         Integer b = accountMapper.getAccountIdByAccount(account.getAccount());
         if(!StringUtils.hasLength(account.getAccount()) || !StringUtils.hasLength(account.getPassword()) || b != null){
-            res.put("msg","f");
-            return res;
+            return Result.failure(ResultCodeEnum.REPEAT_SUBMIT);
         }
         account.setRegTime(LocalDateTime.now());
         accountMapper.registerAccount(account);
         accountMapper.registerAccountInfo(account.getId());
-        res.put("msg", "ok");
-        return res;
+        return Result.success();
     }
 
     @Override
     public Object getAccountInfo(Account account) {
-        JSONObject res = new JSONObject();
-        res.put("msg", "f");
-        if(StringUtils.isEmpty(account.getAccount())){
-            return res;
+        if(!StringUtils.hasLength(account.getAccount())){
+            return Result.failure(ResultCodeEnum.NO_SUCH_RECORD);
         }
         AccountInfo info = accountMapper.getAccountInfoByAccount(account);
         if(info != null){
-            res.put("msg", "ok");
-            res.put("AccountInfo", info);
-            return res;
+            return Result.success(info);
         }
-        return res;
+        return Result.failure(ResultCodeEnum.DATA_ERROR);
     }
-
+    
+    @Override
+    public Object getAccountByAccountId(Integer accountId){
+        Account a;
+        try {
+            a = accountMapper.getAccountByAccountId(accountId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.failure(ResultCodeEnum.FAIL);
+        }
+        return Result.success(a);
+    }
+    @Override
+    public Object getAccountInfoByAid(Integer aid){
+        try{
+            return Result.success(accountMapper.getAccountInfoByAid(aid));
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.failure(ResultCodeEnum.DATA_ERROR);
+        }
+    }
     @Override
     @Transactional(rollbackFor = {RuntimeException.class, Error.class})
     public Object updateAccountInfo(AccountInfo accountInfo) {
-        JSONObject res = new JSONObject();
-        res.put("msg", "ok");
         int f1 = accountMapper.updateAccountInfo(accountInfo);
         int f2 = 1;
         if(!"null".equals(accountInfo.getName())){
             f2 = accountMapper.updateAccountName(accountInfo);
         }
         if(f1 ==  0|| f2 == 0){
-            res.put("msg", "f");
+            return Result.failure(ResultCodeEnum.DATA_ERROR);
         }
-        return res;
+        return Result.success();
     }
 
     @Override
     public Object updateAccountPsw(String map) {
-        JSONObject res = new JSONObject();
-        res.put("msg", "ok");
         JSONObject obj = JSONObject.parseObject(map);
         String password = (String)obj.get("password");
         String oldPassword = (String)obj.get("oldPassword");
         Integer id = (Integer) obj.get("id");
         if(StringUtils.isEmpty(map) || StringUtils.isEmpty(password) || id == null || id <= 0){
-            res.put("msg", "f");
-            return res;
+            return Result.failure(ResultCodeEnum.NO_SUCH_RECORD);
         }
         int f = accountMapper.updateAccountPsw(oldPassword, password, id);
         if(f == 0){
-            res.put("msg", "f");
+           return Result.failure(ResultCodeEnum.FAIL);
         }
-        return res;
+        return Result.success();
     }
 }

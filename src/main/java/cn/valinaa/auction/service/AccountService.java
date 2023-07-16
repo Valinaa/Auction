@@ -15,8 +15,9 @@ import cn.valinaa.auction.bean.AccountInfo;
     Object register(Account account);
 
      Object getAccountInfo(Account account);
-
-
+     Object getAccountInfoByAid(Integer aid);
+    
+     Object getAccountByAccountId(Integer accountId);
      Object updateAccountInfo(AccountInfo accountInfo);
 
      Object updateAccountPsw(String map);

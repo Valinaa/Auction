@@ -4,15 +4,10 @@ import cn.valinaa.auction.bean.AuctionRecord;
 import cn.valinaa.auction.bean.GoodAuction;
 import cn.valinaa.auction.bean.SalerInfo;
 import cn.valinaa.auction.service.GoodsService;
-import cn.valinaa.auction.utils.RedisUtil;
 import com.alibaba.fastjson2.JSONObject;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -62,10 +57,10 @@ public class GoodsController {
     }
 
 
-    @GetMapping(value = "/getAuctionList/{currentPage}/{pageSize}")
+    @GetMapping(value = "/getAuctionList")
     @Operation(summary = "获取拍卖列表（分页）", description = "getAuctionList")
-    public  Object getAuctionList(@PathVariable Integer currentPage, @PathVariable Integer pageSize){
-        return goodsService.getAuctionList(currentPage, pageSize);
+    public  Object getAuctionList(){
+        return goodsService.getAuctionList(1,100);
     }
 
 
@@ -81,7 +76,12 @@ public class GoodsController {
     public  Object addShopCart(@PathVariable Integer aid, @PathVariable Integer gid){
         return goodsService.addShopCart(aid, gid);
     }
-
+    
+    @GetMapping(value = "/getRecentRecord/{gid}")
+    @Operation(summary = "获取特定商品的最近竞拍记录", description = "getRecentRecord/{gid}")
+    public Object getRecentRecordByGid(@PathVariable Integer gid){
+        return goodsService.getRecentRecordByGid(gid);
+    }
 
     @PostMapping(value = "/auction")
     @Operation(summary = "竞拍", description = "auction")
@@ -90,24 +90,24 @@ public class GoodsController {
     }
 
 
-    @GetMapping(value = "/getShoppingCartList/{aid}/{curr}/{pageSize}")
+    @GetMapping(value = "/getShoppingCartList/{aid}")
     @Operation(summary = "获取购物车列表", description = "getShoppingCartList")
-    public  Object getShoppingCartList(@PathVariable Integer aid, @PathVariable Integer curr, @PathVariable Integer pageSize){
-        return goodsService.getShoppingCartList(aid, curr, pageSize);
+    public  Object getShoppingCartList(@PathVariable Integer aid){
+        return goodsService.getShoppingCartList(aid, 1,100);
     }
 
 
-    @GetMapping(value = "/getAuctionRecord/{aid}/{curr}/{pageSize}")
+    @GetMapping(value = "/getAuctionRecord/{aid}")
     @Operation(summary = "获取竞拍记录", description = "getAuctionRecord")
-    public  Object getAuctionRecord(@PathVariable Integer aid, @PathVariable Integer curr, @PathVariable Integer pageSize){
-        return goodsService.getAuctionRecord(aid, curr, pageSize);
+    public  Object getAuctionRecord(@PathVariable Integer aid){
+        return goodsService.getAuctionRecord(aid, 1,100);
     }
 
 
-    @GetMapping(value = "/getMyAuction/{aid}/{curr}/{pageSize}")
+    @GetMapping(value = "/getMyAuction/{aid}")
     @Operation(summary = "获取我的拍卖", description = "getMyAuction")
-    public  Object getMyAuction(@PathVariable Integer aid, @PathVariable Integer curr, @PathVariable Integer pageSize){
-        return goodsService.getMyAuction(aid, curr, pageSize);
+    public  Object getMyAuction(@PathVariable Integer aid){
+        return goodsService.getMyAuction(aid, 1,100);
     }
 
     @GetMapping(value = "/getAuctionRank/{gid}")
@@ -135,10 +135,10 @@ public class GoodsController {
         return goodsService.searchAuctionList(condition, curr, pageSize);
     }
 
-    @GetMapping(value = "/getGoodsList/{curr}/{pageSize}")
+    @GetMapping(value = "/getGoodsList")
     @Operation(summary = "获取商品列表", description = "getGoodsList")
-    public  Object getGoodsList(@PathVariable Integer curr, @PathVariable Integer pageSize){
-        return goodsService.getGoodsList(curr, pageSize);
+    public  Object getGoodsList(){
+        return goodsService.getGoodsList(1,100);
     }
 
 }

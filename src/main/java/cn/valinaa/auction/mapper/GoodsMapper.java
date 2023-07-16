@@ -59,6 +59,8 @@ public interface GoodsMapper {
             " a.id = #{gid}")
     Map<String, Object> getGoodInfoById(Integer gid, Integer aid);
 
+    @Select("select * from auction_record where gid=#{gid} order by now_price DESC limit 1")
+    AuctionRecord getRecentRecordByGid(Integer gid);
 
     @Select("SELECT count(*) from shoppingcart where aid = #{aid} and gid = #{gid}")
     Integer shoppingCartIsExists(Integer aid, Integer gid);

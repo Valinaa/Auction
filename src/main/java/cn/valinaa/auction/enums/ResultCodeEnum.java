@@ -16,6 +16,7 @@ public enum ResultCodeEnum {
     ILLEGAL_REQUEST(205, "非法请求"),
     REPEAT_SUBMIT(206, "重复提交"),
 
+    NO_SUCH_RECORD(40001,"没有这个记录"),
     LOGIN_AUTH(208, "未登陆"),
     LOGIN_ERROR(207, "登陆失败"),
     PERMISSION(209, "没有权限"),
