@@ -1,7 +1,5 @@
 server:
   port: 8000
-#  servlet:
-#    context-path: /auction
 spring:
   datasource:
     username: auction
@@ -20,13 +18,13 @@ spring:
         time-between-eviction-runs: 1000
   cache:
     type: redis
-#pagehelper分页插件配置
+
 pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
-# springdoc-openapi项目配置
+
 springdoc:
   packages-to-scan: cn.valinaa.auction.controller
   swagger-ui:
@@ -36,7 +34,7 @@ springdoc:
     enabled: true
   api-docs:
     enabled: true
-# knife4j的增强配置，不需要增强可以不配
+
 knife4j:
   enable: true
   setting:

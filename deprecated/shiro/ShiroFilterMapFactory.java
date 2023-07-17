@@ -1,4 +1,4 @@
-package cn.valinaa.auction.shiro;
+package deprecated.shiro;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,10 +1,11 @@
-package cn.valinaa.auction.shiro;
+package deprecated.shiro;
 
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import java.io.IOException;
 
 /**
  * @author Valinaa

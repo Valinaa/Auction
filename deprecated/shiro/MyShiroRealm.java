@@ -1,4 +1,4 @@
-package cn.valinaa.auction.shiro;
+package deprecated.shiro;
 
 import cn.valinaa.auction.bean.Account;
 import cn.valinaa.auction.bean.Identity;

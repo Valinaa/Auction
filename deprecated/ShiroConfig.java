@@ -1,9 +1,9 @@
-package cn.valinaa.auction.config;
+package deprecated;
 
 import cn.valinaa.auction.shiro.MyShiroRealm;
 import cn.valinaa.auction.shiro.RoleFilter;
 import cn.valinaa.auction.shiro.ShiroFilterMapFactory;
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
