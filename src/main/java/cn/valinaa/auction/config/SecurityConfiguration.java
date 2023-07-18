@@ -1,16 +1,18 @@
 package cn.valinaa.auction.config;
 
-import cn.ecust.security.UserDetailsServiceImpl;
+import cn.valinaa.auction.security.UserDetailsServiceImpl;
 import cn.valinaa.auction.security.custom.CustomAccessDeniedHandler;
 import cn.valinaa.auction.security.custom.CustomAuthenticationEntryPoint;
 import cn.valinaa.auction.security.custom.CustomAuthorizationTokenFilter;
 import cn.valinaa.auction.security.custom.CustomLogoutSuccessHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.valinaa.auction.utils.JwtUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -34,11 +36,14 @@ import java.util.List;
 
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfiguration {
-    
-    @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
-    
+
+    private final UserDetailsServiceImpl userDetailsService;
+
+    private final JwtUtil jwtUtil;
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -46,7 +51,7 @@ public class SecurityConfiguration {
     
     
     /**
-     * * 跨域配置
+     * 跨域配置
      *
      * @return {@link CorsConfigurationSource}
      * @see CorsConfigurationSource
@@ -70,27 +75,34 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement((sessionManagement)->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new CustomAuthorizationTokenFilter(userDetailsService, jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement((sessionManagement)->sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new CustomAuthorizationTokenFilter(userDetailsService, jwtUtil),
+                        UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling)->exceptionHandling
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                         .accessDeniedHandler(new CustomAccessDeniedHandler()))
                 .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
+                        // 允许所有OPTIONS请求
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // 允许直接访问授权登录接口
+                        .requestMatchers(HttpMethod.POST, "/authenticate").permitAll()
+                        // 允许 SpringMVC 的默认错误地址匿名访问
+                        .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated())
                 .cors((cors) -> cors.configurationSource(this.corsConfigurationSource()))
-                .logout((logout)->logout.logoutSuccessHandler(new CustomLogoutSuccessHandler()).permitAll())
-                .formLogin((formLogin)->formLogin.loginPage("/login").loginProcessingUrl("/LoginCheck")
-                        .successForwardUrl("/mainView").failureForwardUrl("/Login")
-                        .usernameParameter("admin").passwordParameter("password").permitAll());
+                .logout((logout)->logout.logoutSuccessHandler(new CustomLogoutSuccessHandler())
+                        .permitAll())
+                .formLogin(AbstractHttpConfigurer::disable);
         return http.build();
     }
-    
+
+
     @Bean
-    public AuthenticationManager authenticationManagerBean(ObjectPostProcessor<Object> objectPostProcessor) throws Exception {
-        return new AuthenticationManagerBuilder(objectPostProcessor)
-                .userDetailsService(userDetailsServiceImpl)
-                .passwordEncoder((this.passwordEncoder()))
-                .and()
-                .build();
+    public AuthenticationManager authenticationManager(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(this.passwordEncoder());
+        return new ProviderManager(daoAuthenticationProvider);
     }
 }

@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class GenerateKeyPair {
     
-    public static RsaJsonWebKey rsaJsonWebKey = null;
+    public static RsaJsonWebKey rsaJsonWebKey;
     
     /**
      * 创建jwk keyId , 公钥 ，秘钥
