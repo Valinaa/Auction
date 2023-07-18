@@ -35,9 +35,17 @@ springdoc:
   api-docs:
     enabled: true
 
+#logging:
+#  config: classpath:log4j2.xml
+#  level:
+#    web: debug
 knife4j:
   enable: true
   setting:
-    language: zh_cn
-#logging:
-#  config: classpath:log4j2.xml
+    enableSwaggerModels: true
+    swaggerModelName: 实体类列表
+    enableVersion: true
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: The MIT License | Copyright  2022-[Valinaa](https://github.com/Valinaa)
+#      production: false
