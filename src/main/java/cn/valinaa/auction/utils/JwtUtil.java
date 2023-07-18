@@ -1,6 +1,6 @@
 package cn.valinaa.auction.utils;
 
-import cn.valinaa.manage.entity.Result;
+import cn.valinaa.auction.bean.Result;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jose4j.json.JsonUtil;

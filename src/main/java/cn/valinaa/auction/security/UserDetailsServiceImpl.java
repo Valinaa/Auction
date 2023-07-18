@@ -1,8 +1,8 @@
 package cn.valinaa.auction.security;
 
-import cn.valinaa.manage.dao.UserMapper;
-import cn.valinaa.manage.entity.User;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.valinaa.auction.bean.Account;
+import cn.valinaa.auction.mapper.AccountMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
  * @Description : 自定义生产用户实体
  */
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     
-    @Autowired
-    private UserMapper userMapper;
+    private final AccountMapper accountMapper;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username));
+        Account user = accountMapper.getAccountByaccount(username);
         if (user == null) {
             throw new UsernameNotFoundException("用户名:" + username + "不存在!");
         }

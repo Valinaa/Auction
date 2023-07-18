@@ -17,9 +17,9 @@ public enum ResultCodeEnum {
     REPEAT_SUBMIT(206, "重复提交"),
 
     NO_SUCH_RECORD(40001,"没有这个记录"),
-    LOGIN_AUTH(208, "未登陆"),
+    NOT_LOGIN(208, "未登陆"),
     LOGIN_ERROR(207, "登陆失败"),
-    PERMISSION(209, "没有权限"),
+    FORBIDDEN(403, "没有权限"),
 
     GET_FAILED(2001, "信息获取失败"),
     ORDER_PRICE_ERROR(210, "订单商品价格变化"),

@@ -1,14 +1,14 @@
 package cn.valinaa.auction.security.custom;
 
-import cn.valinaa.manage.entity.Result;
-import cn.valinaa.manage.enums.ResultCodeEnum;
+import cn.valinaa.auction.bean.Result;
+import cn.valinaa.auction.enums.ResultCodeEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -19,7 +19,7 @@ import java.io.PrintWriter;
  */
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
-    
+
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -27,8 +27,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json; charset=utf-8");
         PrintWriter out = response.getWriter();
         out.write(new ObjectMapper().writeValueAsString(Result.failure(
-                ResultCodeEnum.USER_ACCOUNT_FORBIDDEN,
-                "Come From CustomAccessDeniedHandler")
+                "Come From CustomAccessDeniedHandler",ResultCodeEnum.FORBIDDEN)
         ));
         out.flush();
         out.close();
