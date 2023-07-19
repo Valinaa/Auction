@@ -37,7 +37,7 @@ public class AccountController {
         Map<String,Account> res = new HashMap<>();
 
         // 登录认证
-        UsernamePasswordToken token = new UsernamePasswordToken(account.getAccount(), account.getPassword());
+            UsernamePasswordToken token = new UsernamePasswordToken(account.getAccount(), account.getPassword());
         // 获取 subject 对象
         Subject subject = SecurityUtils.getSubject();
         try {

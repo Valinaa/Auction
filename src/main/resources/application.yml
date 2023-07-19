@@ -6,19 +6,19 @@ spring:
     password: mtwYSZfeFCydX46A
     url: jdbc:mysql://system.valinaa-wei.tech:3306/auction?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=utf-8
     driver-class-name: com.mysql.cj.jdbc.Driver
-  redis:
-    host: system.valinaa-wei.tech
-    port: 6379
-    password: valina
-    lettuce:
-      pool:
-        max-active: 15
-        max-idle: 10
-        min-idle: 2
-        time-between-eviction-runs: 1000
   cache:
     type: redis
-
+  data:
+    redis:
+      host: system.valinaa-wei.tech
+      password: valina
+      port: 6379
+      lettuce:
+        pool:
+          max-active: 15
+          max-idle: 10
+          min-idle: 2
+          time-between-eviction-runs: 1000
 pagehelper:
   helperDialect: mysql
   reasonable: true
@@ -34,7 +34,9 @@ springdoc:
     enabled: true
   api-docs:
     enabled: true
-
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #logging:
 #  config: classpath:log4j2.xml
 #  level:

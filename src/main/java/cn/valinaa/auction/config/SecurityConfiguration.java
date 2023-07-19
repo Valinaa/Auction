@@ -1,10 +1,10 @@
 package cn.valinaa.auction.config;
 
-import cn.valinaa.auction.security.UserDetailsServiceImpl;
 import cn.valinaa.auction.security.custom.CustomAccessDeniedHandler;
 import cn.valinaa.auction.security.custom.CustomAuthenticationEntryPoint;
 import cn.valinaa.auction.security.custom.CustomAuthorizationTokenFilter;
 import cn.valinaa.auction.security.custom.CustomLogoutSuccessHandler;
+import cn.valinaa.auction.service.impl.UserServiceImpl;
 import cn.valinaa.auction.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -39,7 +39,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserServiceImpl userService;
 
     private final JwtUtil jwtUtil;
 
@@ -77,7 +77,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement((sessionManagement)->sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new CustomAuthorizationTokenFilter(userDetailsService, jwtUtil),
+                .addFilterBefore(new CustomAuthorizationTokenFilter(userService, jwtUtil),
                         UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling)->exceptionHandling
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
@@ -101,7 +101,7 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationManager authenticationManager(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setUserDetailsService(userService);
         daoAuthenticationProvider.setPasswordEncoder(this.passwordEncoder());
         return new ProviderManager(daoAuthenticationProvider);
     }

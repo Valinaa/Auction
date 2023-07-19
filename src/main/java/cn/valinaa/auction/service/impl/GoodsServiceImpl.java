@@ -1,4 +1,4 @@
-package cn.valinaa.auction.serviceImpl;
+package cn.valinaa.auction.service.impl;
 
 import cn.valinaa.auction.enums.ResultCodeEnum;
 import cn.valinaa.auction.utils.RedisUtil;
@@ -49,7 +49,7 @@ public class GoodsServiceImpl implements GoodsService {
         if(b){ return  Result.failure(ResultCodeEnum.NO_SUCH_RECORD);}
         Integer id = goodAuction.getAccountId();
         if(goodsMapper.getIdentity(id) < Constant.SalerUser){
-            return Result.failure(ResultCodeEnum.PERMISSION);
+            return Result.failure(ResultCodeEnum.FORBIDDEN);
         }
 //        goodAuction.setPic((String)picPathWrapper.get(id));
 //        picPathWrapper.remove(id);

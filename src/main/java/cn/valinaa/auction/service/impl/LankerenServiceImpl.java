@@ -1,4 +1,4 @@
-package cn.valinaa.auction.serviceImpl;
+package cn.valinaa.auction.service.impl;
 
 
 import cn.valinaa.auction.bean.Result;

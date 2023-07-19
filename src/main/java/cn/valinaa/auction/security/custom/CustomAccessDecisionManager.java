@@ -24,4 +24,9 @@ public class CustomAccessDecisionManager implements AuthorizationManager<Object>
     public void verify(Supplier<Authentication> authentication, Object object) {
         AuthorizationManager.super.verify(authentication, object);
     }
+
+    @Override
+    public AuthorizationDecision check(Supplier<Authentication> authentication, Object object) {
+        return null;
+    }
 }

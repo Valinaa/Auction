@@ -4,8 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Valinaa
@@ -32,17 +38,4 @@ public class Account {
     @Schema(description = "注册时间",name = "regTime")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regTime;
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", account='" + account + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", identity=" + identity +
-                ", status=" + status +
-                ", regTime=" + regTime +
-                '}';
-    }
 }

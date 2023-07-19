@@ -42,9 +42,10 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
                     List<AuthorityEnum> roles = router.getRoles();
                     int size = roles.size();
                     String[] attributes = new String[size];
-                    for (int i = 0; i < size; i++) {
-                        attributes[i] = "ROLE_" + roles.get(i).getValue();
-                    }
+                    // TODO
+//                    for (int i = 0; i < size; i++) {
+//                        attributes[i] = "ROLE_" + roles.get(i).getValue();
+//                    }
                     return SecurityConfig.createList(attributes);
                 }
             }
