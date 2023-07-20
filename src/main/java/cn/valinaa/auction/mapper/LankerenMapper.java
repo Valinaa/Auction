@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 import java.util.Map;
 
-@Mapper
 public interface LankerenMapper {
 
     @Select("SELECT id, name, account, identity, email, phone, reg_time, `status` from account " +
@@ -25,7 +24,7 @@ public interface LankerenMapper {
     @Select("SELECT order_id, o.account, good_name, start_price, end_price, account_name, address, create_time, `status`, saler_id, goods_id, (SELECT busine_address from saler_info WHERE id = saler_id) salerAddress from `order` o")
     List<Map<String, Object>> getOrderList();
 
-    @Select("SELECT id, busine_name, saler_name, busine_contact, saler_email, apply_reason, account, `status` from saler_info ")
+    @Select("SELECT id, busine_name, saler_name, saler_email, apply_reason, account, `status` from saler_info ")
     List<Map<String, Object>> getSalerApply();
 
     @Update("UPDATE `auction`.`account` SET `status` = #{status} WHERE `id` = #{aid} ")

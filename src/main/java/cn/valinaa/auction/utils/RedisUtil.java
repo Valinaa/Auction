@@ -1,22 +1,13 @@
 package cn.valinaa.auction.utils;
 
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import jakarta.annotation.Resource;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**

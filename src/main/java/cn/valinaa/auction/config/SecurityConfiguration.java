@@ -1,9 +1,7 @@
 package cn.valinaa.auction.config;
 
-import cn.valinaa.auction.security.custom.CustomAccessDeniedHandler;
-import cn.valinaa.auction.security.custom.CustomAuthenticationEntryPoint;
+import cn.valinaa.auction.security.custom.CustomAuthenticationHandler;
 import cn.valinaa.auction.security.custom.CustomAuthorizationTokenFilter;
-import cn.valinaa.auction.security.custom.CustomLogoutSuccessHandler;
 import cn.valinaa.auction.service.impl.UserServiceImpl;
 import cn.valinaa.auction.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +40,9 @@ public class SecurityConfiguration {
     private final UserServiceImpl userService;
 
     private final JwtUtil jwtUtil;
-
+    
+    private final CustomAuthenticationHandler customAuthenticationHandler;
+    private final CustomAuthorizationTokenFilter customAuthorizationTokenFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -77,21 +77,28 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement((sessionManagement)->sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new CustomAuthorizationTokenFilter(userService, jwtUtil),
+                .authenticationManager(this.authenticationManager())
+                .addFilterBefore(customAuthorizationTokenFilter,
                         UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling)->exceptionHandling
-                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                        .accessDeniedHandler(new CustomAccessDeniedHandler()))
+                        .authenticationEntryPoint(customAuthenticationHandler)
+                        .accessDeniedHandler(customAuthenticationHandler))
+                .formLogin((formLogin)->formLogin.loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .successForwardUrl("/index")
+                        .permitAll())
                 .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
                         // 允许所有OPTIONS请求
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // 允许直接访问授权登录接口
-                        .requestMatchers(HttpMethod.POST, "/authenticate").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         // 允许 SpringMVC 的默认错误地址匿名访问
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated())
                 .cors((cors) -> cors.configurationSource(this.corsConfigurationSource()))
-                .logout((logout)->logout.logoutSuccessHandler(new CustomLogoutSuccessHandler())
+                .logout((logout)->logout.logoutUrl("/logout")
+                        .logoutSuccessUrl("/index")
+                        .logoutSuccessHandler(customAuthenticationHandler)
                         .permitAll())
                 .formLogin(AbstractHttpConfigurer::disable);
         return http.build();

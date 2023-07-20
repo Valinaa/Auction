@@ -7,12 +7,10 @@ import cn.valinaa.auction.enums.ResultCodeEnum;
 import cn.valinaa.auction.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.Subject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,21 +28,21 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/logins")
     @Operation(summary = "登录接口", description = "login")
     public Result<Map<String,Account>> login(@RequestBody Account account){
 
         Map<String,Account> res = new HashMap<>();
 
         // 登录认证
-            UsernamePasswordToken token = new UsernamePasswordToken(account.getAccount(), account.getPassword());
+//            UsernamePasswordToken token = new UsernamePasswordToken(account.getAccount(), account.getPassword());
         // 获取 subject 对象
-        Subject subject = SecurityUtils.getSubject();
+//        Subject subject = SecurityUtils.getSubject();
         try {
-            subject.login(token);
-            Account realAccount = (Account)subject.getPrincipal();
-            realAccount.setPassword("null");
-            res.put("account", realAccount);
+//            subject.login(token);
+//            Account realAccount = (Account)subject.getPrincipal();
+//            realAccount.setPassword("null");
+//            res.put("account", realAccount);
             return Result.success(res);
         }catch (Exception e){
             return Result.failure(ResultCodeEnum.LOGIN_ERROR);
@@ -92,8 +90,8 @@ public class AccountController {
     @GetMapping(value = "/logout")
     @Operation(summary = "注销接口", description = "logout")
     public Object updateAccountPsw(){
-        Subject lvSubject=SecurityUtils.getSubject();
-        lvSubject.logout();
+//        Subject lvSubject=SecurityUtils.getSubject();
+//        lvSubject.logout();
         return Result.success();
     }
 

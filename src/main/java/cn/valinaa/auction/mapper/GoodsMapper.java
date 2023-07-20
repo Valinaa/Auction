@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 import java.util.Map;
 
-@Mapper
 public interface GoodsMapper {
 
     @Insert("INSERT INTO `goods_auction`(`good_name`, `good_type`, `start_price`, `price_plus`, `start_time`, `end_time`, `account_id`, " +
@@ -24,9 +23,9 @@ public interface GoodsMapper {
     @Select("SELECT identity from account where id = #{id}")
     Integer getIdentity(Integer id);
 
-    @Insert("INSERT INTO `saler_info`(`busine_name`, `saler_name`, `busine_address`, `busine_contact`, `saler_email`, `apply_reason`, " +
+    @Insert("INSERT INTO `saler_info`(`busine_name`, `saler_name`, `busine_address`,  `saler_email`, `apply_reason`, " +
             "`account`, `apply_time`) VALUES " +
-            "(#{busineName}, #{salerName}, #{busineAddress}, #{busineContact}, #{salerEmail}, #{applyReason}, #{account}, #{applyTime})")
+            "(#{busineName}, #{salerName}, #{busineAddress},  #{salerEmail}, #{applyReason}, #{account}, #{applyTime})")
     int saveSalerInfo(SalerInfo salerInfo);
 
 
@@ -121,8 +120,8 @@ public interface GoodsMapper {
     Integer getGoodsStatus(Integer gid);
 
     @Select("SELECT g.id, g.good_name, g.pic, g.saler_name, g.now_price,(SELECT count(*) ttt from auction_record WHERE gid = g.id) aucNum from goods_auction g " +
-            "WHERE end_time > #{nowTime}  and `status` = 1 and good_name like #{condition}" +
-            "ORDER BY end_time ASC")
+            "WHERE end_time > #{nowTime}  and `status` = 1 and good_name like #{condition} " +
+            "ORDER BY end_time")
     List<GoodCard> searchAuctionList(String nowTime, String condition);
 
     @Select("SELECT * from goods_auction")

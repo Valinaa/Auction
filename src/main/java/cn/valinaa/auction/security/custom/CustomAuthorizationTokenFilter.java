@@ -3,6 +3,7 @@ package cn.valinaa.auction.security.custom;
 import cn.valinaa.auction.utils.JwtUtil;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.jose4j.lang.JoseException;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
@@ -24,7 +26,9 @@ import java.io.IOException;
  * @Date : 2022/7/23
  * @Description : 自定义验证token
  */
+@Slf4j
 @RequiredArgsConstructor
+@Component
 public class CustomAuthorizationTokenFilter extends OncePerRequestFilter {
     
     private final UserDetailsService userDetailsService;
@@ -38,15 +42,19 @@ public class CustomAuthorizationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
         // 获取Header
-        String authToken = request.getHeader(TOKEN_HEADER);
+        final String authHeader = request.getHeader(TOKEN_HEADER);
         // 存在token但不是tokenHead开头
-        // if (null != authHeader && authHeader.startsWith(TOKEN_HEAD)) {
+         if (null == authHeader || !authHeader.startsWith("BEARER ")) {
+             log.warn("authHeader is null come from TokenFilter");
+             filterChain.doFilter(request, response);
+             return;
+         }
         // 字段截取authToken
-        // String authToken = authHeader.substring(TOKEN_HEAD.length());
+        String authToken = authHeader.substring(7);
         
         // 没有token,直接放行
-        if (authToken == null || "".equals(authToken)) {
-            System.out.println("authToken is null come from TokenFilter");
+        if (authToken.isEmpty()) {
+            log.warn("authToken is null come from TokenFilter");
             filterChain.doFilter(request, response);
             return;
         }
@@ -62,13 +70,15 @@ public class CustomAuthorizationTokenFilter extends OncePerRequestFilter {
             // 登录
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             // 验证token是否有效，如果有效，将他重新放到用户对象里。
+            // TODO 此处token有效性可以从redis｜数据库中获取
+//            Boolean isTokenValid = true;
             try {
                 if (null != jwtUtil.verifyToken(authToken, userDetails)) {
-                    UsernamePasswordAuthenticationToken authenticationToken =
+                    UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     // 重新设置到用户对象里
-                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             } catch (MalformedClaimException | JoseException e) {
                 throw new RuntimeException(e);

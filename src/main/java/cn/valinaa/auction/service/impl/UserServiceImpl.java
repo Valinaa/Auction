@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-        implements IUserService, UserDetailsService {
+        implements IUserService {
 
     private final UserMapper userMapper;
 

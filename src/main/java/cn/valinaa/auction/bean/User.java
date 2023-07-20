@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.annotation.Version;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -155,6 +156,9 @@ public class User implements UserDetails, Serializable {
                 return false;
             }
         }
-
-
+        
+        User(String username,String password){
+            this.username=username;
+            this.password=password;
+        }
 }

@@ -4,7 +4,6 @@ import cn.valinaa.auction.bean.Account;
 import cn.valinaa.auction.bean.AccountInfo;
 import org.apache.ibatis.annotations.*;
 
-@Mapper
 public interface AccountMapper {
 
     @Select("select * from account where account = #{account} and status = 1")

@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-@MapperScan("cn.valinaa.auction.mapper")
 public class AuctionApplication {
     
     public static void main(String[] args) {
