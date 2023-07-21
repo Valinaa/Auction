@@ -17,6 +17,7 @@ public enum ResultCodeEnum {
     REPEAT_SUBMIT(206, "重复提交"),
 
     NO_SUCH_RECORD(40001,"没有这个记录"),
+    DUPLICATE_USERNAME(40002,"用户名已存在！"),
     NOT_LOGIN(208, "未登陆"),
     LOGIN_ERROR(207, "登陆失败"),
     FORBIDDEN(403, "没有权限"),

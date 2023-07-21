@@ -80,7 +80,7 @@ public class User implements UserDetails, Serializable {
 
         @TableField("tag")
         @Schema(description = "个人标签",name = "tag")
-        private String tag;
+        private List<String> tag;
 
         @TableField("authorities")
         @Schema(description = "权限列表",name = "authorities")
@@ -157,8 +157,9 @@ public class User implements UserDetails, Serializable {
             }
         }
         
-        User(String username,String password){
+        public User(String username,String password,String name){
             this.username=username;
             this.password=password;
+            this.name=name;
         }
 }

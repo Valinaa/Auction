@@ -41,13 +41,11 @@ public class CustomAuthenticationHandler implements AuthenticationSuccessHandler
      * @param response      so that the user agent can begin authentication
      * @param authException that caused the invocation
      * @throws IOException      异常
-     * @throws ServletException 异常
      */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException)
-            throws IOException, ServletException {
-        
+            throws IOException {
         StringBuilder detailMessage =new StringBuilder(authException
                 .getClass().getSimpleName() + " --- ");
         if (authException instanceof InsufficientAuthenticationException) {
@@ -58,8 +56,8 @@ public class CustomAuthenticationHandler implements AuthenticationSuccessHandler
         response.setCharacterEncoding(CHARACTER_ENCODING);
         response.setContentType(CONTENT_TYPE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().write(OBJECT_MAPPER.writeValueAsString(Result.failure(
-                detailMessage, ResultCodeEnum.NOT_LOGIN)));
+        response.getWriter().write(OBJECT_MAPPER.writeValueAsString(
+                Result.failure(detailMessage, ResultCodeEnum.NOT_LOGIN)));
     }
     
     /**
@@ -69,7 +67,9 @@ public class CustomAuthenticationHandler implements AuthenticationSuccessHandler
      * @param accessDeniedException that caused the invocation
      */
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response,
+                       AccessDeniedException accessDeniedException)
+            throws IOException {
         StringBuilder detailMessage =new StringBuilder(accessDeniedException
                 .getClass().getSimpleName() + " --- ");
         if (accessDeniedException instanceof MissingCsrfTokenException) {
@@ -93,7 +93,7 @@ public class CustomAuthenticationHandler implements AuthenticationSuccessHandler
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException authException)
-            throws IOException, ServletException {
+            throws IOException {
         StringBuilder detailMessage =new StringBuilder(authException
                 .getClass().getSimpleName() + " --- ");
         detailMessage.append(authException.getLocalizedMessage());
@@ -151,10 +151,11 @@ public class CustomAuthenticationHandler implements AuthenticationSuccessHandler
      * @param response       响应
      * @param authentication 认证信息
      * @throws IOException      异常
-     * @throws ServletException 异常
      */
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+                                Authentication authentication)
+            throws IOException {
         response.setCharacterEncoding(CHARACTER_ENCODING);
         response.setContentType(CONTENT_TYPE);
         response.setStatus(HttpStatus.OK.value());

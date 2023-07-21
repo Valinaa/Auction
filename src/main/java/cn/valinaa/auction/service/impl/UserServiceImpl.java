@@ -1,7 +1,9 @@
 package cn.valinaa.auction.service.impl;
 
+import cn.valinaa.auction.bean.Result;
 import cn.valinaa.auction.bean.User;
 import cn.valinaa.auction.enums.AuthorityEnum;
+import cn.valinaa.auction.enums.ResultCodeEnum;
 import cn.valinaa.auction.mapper.UserMapper;
 import cn.valinaa.auction.service.IUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -11,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +38,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             }
         }
         return user;
+    }
+    
+    @Override
+    public Result<User> register(User user) {
+        String username = user.getUsername();
+        if(userMapper.selectOne(new QueryWrapper<User>().eq("username", username)) != null){
+            return Result.failure(user,ResultCodeEnum.DUPLICATE_USERNAME);
+        }
+        try{
+            userMapper.insert(user);
+        }catch (Exception e){
+            return Result.build(user,50001,"注册失败！请联系管理员！");
+        }
+        return Result.success(user);
     }
 }

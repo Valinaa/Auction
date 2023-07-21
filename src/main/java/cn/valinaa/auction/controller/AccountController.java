@@ -49,7 +49,7 @@ public class AccountController {
         }
     }
 
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/registers")
     @Operation(summary = "注册接口", description = "register")
     public Object register(@RequestBody Account account){
         return accountService.register(account);

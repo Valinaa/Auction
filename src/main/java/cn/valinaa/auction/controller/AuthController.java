@@ -54,4 +54,10 @@ public class AuthController {
             put("token", token);
         }});
     }
+    
+    @PostMapping("/register")
+    @Operation(summary = "register", description = "注册")
+    public Result<User> register(@RequestBody User user){
+        return userService.register(user);
+    }
 }
