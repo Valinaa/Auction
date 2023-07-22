@@ -1,4 +1,5 @@
 package cn.valinaa.auction.config;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,7 +24,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Duration;
 
@@ -137,7 +138,7 @@ public class LettuceConfiguration extends CachingConfigurerSupport {
                 // 设置value 为自动转Json的Object
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
                 //! 不缓存null
-                 .disableCachingNullValues()
+                .disableCachingNullValues()
                 //! 设置缓存的过期时间
                 .entryTtl(duration);
     }
