@@ -10,4 +10,5 @@
 
 1. Based on Spring Boot, in the master branch, it uses Apache Shiro as the security component.
 2. Use Mybatis-Plus to reduce more SQL！
-3. Get rank By Redis(based on the Zset).
+3. Get leaderboards By Redis(based on the Zset).
+4. Add goods and set infomation of auction, and able to Participate in the auction; Leaderboards will be automatically generated after auction time expires
