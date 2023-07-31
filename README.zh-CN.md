@@ -1,5 +1,5 @@
 <p align='center'>
-<b>English</b> | <a href="https://github.com/Valinaa/Auction/blob/master/README.md">English</a>
+<b>简体中文</b> | <a href="https://github.com/Valinaa/Auction/blob/master/README.md">English</a>
 </p>
 
 # Auction
