@@ -4,7 +4,7 @@
 
 # Auction
 
-- a website of auction system.
+- Auction System.
 
 ## Features
 
